@@ -19,11 +19,11 @@ My research interests include formal verification, static analysis, and program 
 
 # **Working Experiences**
 
-I am a researcher at Huawei Hong Kong Research Center since October 2023, focusing on applying formal methods to distributed systems and program verification.
+I am a researcher at Huawei Hong Kong Research Center since October 2023, focusing on applying formal methods to solve practical problems.
 
 Previously, I was a Research Fellow at the National University of Singapore from April 2022 to October 2023.
 
-Before that, I was an Applied Scientist Intern at Amazon, London, from September 2019 to December 2019. I was also a Research Assistant at NUS Computing from February 2016 to July 2016, an Internship Student at the National University of Singapore from July 2015 to January 2016, a Research Student at JAIST, Japan from January 2015 to March 2015, and a Software Developer at FPT Software, Vietnam from April 2014 to October 2014.
+Before that, I was an Applied Scientist Intern at Amazon, London. I also worked as a Research Assistant at NUS Computing, an Internship Student at the National University of Singapore, a Research Student at JAIST, Japan, and a Software Developer at FPT Software, Vietnam.
 
 # **Selected Publication**
 
