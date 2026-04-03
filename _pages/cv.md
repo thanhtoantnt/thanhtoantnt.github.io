@@ -18,7 +18,6 @@ Work experience
 ======
 * October 2023 - Present: Researcher
   * Huawei, Hong Kong SAR
-  * Applying formal methods to solve practical problems, including TLA+ for modeling distributed systems, VeriFast for verifying data structure programs, and property-based testing
 
 * April 2022 - October 2023: Research Fellow
   * National University of Singapore
