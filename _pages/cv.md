@@ -39,7 +39,7 @@ Work experience
 
 Languages
 ======
+* Vietnamese (Native)
 * English (Full Professional)
-* Vietnamese (Native or Bilingual)
 * Chinese (Professional Working)
 * Cantonese (Elementary)
