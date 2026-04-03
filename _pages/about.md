@@ -11,7 +11,7 @@ redirect_from:
 
 # **Short Bio**
 
-I am a researcher at Huawei Hong Kong Research Center, working on applying formal methods to solve practical problems inside Huawei.
+I am a researcher at Huawei Hong Kong, working on applying formal methods to solve practical problems inside Huawei.
 
 I received the Ph.D. degree in Computer Science from the National University of Singapore in 2022, and the B.Eng. degree in Computer Science from VNU University of Engineering and Technology in 2015.
 
@@ -19,7 +19,7 @@ My research interests include formal verification, static analysis, and program 
 
 # **Working Experiences**
 
-I am a researcher at Huawei Hong Kong Research Center since October 2023, focusing on applying formal methods to solve practical problems.
+I am a researcher at Huawei Hong Kong since October 2023, focusing on applying formal methods to solve practical problems.
 
 Previously, I was a Research Fellow at the National University of Singapore from April 2022 to October 2023.
 
