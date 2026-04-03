@@ -50,9 +50,3 @@ Languages
 * Vietnamese (Native or Bilingual)
 * Chinese (Professional Working)
 * Cantonese (Elementary)
-
-Publications
-======
-  <ul>{% for post in site.publications reversed %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
