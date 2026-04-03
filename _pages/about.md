@@ -23,7 +23,7 @@ I am a researcher at Huawei Hong Kong since October 2023, focusing on applying f
 
 Previously, I was a Research Fellow at the National University of Singapore from April 2022 to October 2023.
 
-Before that, I was an Applied Scientist Intern at Amazon, London. I also worked as a Research Assistant at NUS Computing, an Internship Student at the National University of Singapore, a Research Student at JAIST, Japan, and a Software Developer at FPT Software, Vietnam.
+Before that, I was an Applied Scientist Intern at Amazon, London. I also worked as a Research Assistant at NUS Computing, a Research Intern at the National University of Singapore, a Research Intern at JAIST, Japan, and a Software Developer at FPT Software, Vietnam.
 
 # **Selected Publication**
 

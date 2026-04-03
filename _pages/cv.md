@@ -29,10 +29,10 @@ Work experience
 * February 2016 - July 2016: Research Assistant
   * NUS Computing, Singapore
 
-* July 2015 - January 2016: Internship Student
+* July 2015 - January 2016: Research Intern
   * National University of Singapore
 
-* January 2015 - March 2015: Research Student
+* January 2015 - March 2015: Research Intern
   * JAIST, Ishikawa, Japan
 
 * April 2014 - October 2014: Software Developer
