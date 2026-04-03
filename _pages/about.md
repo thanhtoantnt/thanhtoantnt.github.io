@@ -27,12 +27,12 @@ Before that, I was an Applied Scientist Intern at Amazon, London. I also worked 
 
 # **Selected Publication**
 
-- Interoperability in Blockchain: A Survey. Kunpeng Ren, Nhut-Minh Ho, Dumitrel Loghin, _Thanh-Toan Nguyen_, Beng Chin Ooi, Quang-Trung Ta, Feida Zhu. IEEE Transactions on Knowledge and Data Engineering, 2023.
+- Interoperability in Blockchain: A Survey. Kunpeng Ren, Nhut-Minh Ho, Dumitrel Loghin, \_Thanh-Toan Nguyen\_, Beng Chin Ooi, Quang-Trung Ta, Feida Zhu. IEEE Transactions on Knowledge and Data Engineering, 2023.
 
-- KG-RAG: Enhancing GUI Agent Decision-Making via Knowledge Graph-Driven Retrieval-Augmented Generation. Ziyi Guan, Jason Chun Lok Li, Zhijian Hou, Pingping Zhang, Donglai Xu, Yuzhi Zhao, Mengyang Wu, Jinpeng Chen, _Thanh-Toan Nguyen_, Pengfei Xian, Wenao Ma, Shengchao Qin, Graziano Chesi, Ngai Wong. Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing, 2025.
+- KG-RAG: Enhancing GUI Agent Decision-Making via Knowledge Graph-Driven Retrieval-Augmented Generation. Ziyi Guan, Jason Chun Lok Li, Zhijian Hou, Pingping Zhang, Donglai Xu, Yuzhi Zhao, Mengyang Wu, Jinpeng Chen, \_Thanh-Toan Nguyen\_, Pengfei Xian, Wenao Ma, Shengchao Qin, Graziano Chesi, Ngai Wong. Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing, 2025.
 
-- Automated Repair of Heap-Manipulating Programs using Deductive Synthesis. _Thanh-Toan Nguyen_, Quang-Trung Ta, Ilya Sergey, Wei-Ngan Chin. International Conference on Verification, Model Checking, and Abstract Interpretation, 2021.
+- Automated Repair of Heap-Manipulating Programs using Deductive Synthesis. \_Thanh-Toan Nguyen\_, Quang-Trung Ta, Ilya Sergey, Wei-Ngan Chin. International Conference on Verification, Model Checking, and Abstract Interpretation, 2021.
 
-- Automatic Program Repair Using Formal Verification and Expression Templates. _Thanh-Toan Nguyen_, Quang-Trung Ta, Wei-Ngan Chin. International Conference on Verification, Model Checking, and Abstract Interpretation, 2019.
+- Automatic Program Repair Using Formal Verification and Expression Templates. \_Thanh-Toan Nguyen\_, Quang-Trung Ta, Wei-Ngan Chin. International Conference on Verification, Model Checking, and Abstract Interpretation, 2019.
 
-- A Certified Decision Procedure for Tree Shares. Xuan-Bach Le, _Thanh-Toan Nguyen_, Wei-Ngan Chin, Aquinas Hobor. International Conference on Formal Engineering Methods, 2017.
+- A Certified Decision Procedure for Tree Shares. Xuan-Bach Le, \_Thanh-Toan Nguyen\_, Wei-Ngan Chin, Aquinas Hobor. International Conference on Formal Engineering Methods, 2017.
