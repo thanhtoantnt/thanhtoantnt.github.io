@@ -11,7 +11,7 @@ redirect_from:
 
 # **Short Bio**
 
-I am a researcher at Huawei Hong Kong Research Center, working on applying formal methods to solve practical problems inside Huawei. We use TLA+ for modeling distributed systems, VeriFast for verifying data structure programs, and property-based testing to check the correctness of the implementation w.r.t. the models.
+I am a researcher at Huawei Hong Kong Research Center, working on applying formal methods to solve practical problems inside Huawei.
 
 I received the Ph.D. degree in Computer Science from the National University of Singapore in 2022, and the B.Eng. degree in Computer Science from VNU University of Engineering and Technology in 2015.
 
