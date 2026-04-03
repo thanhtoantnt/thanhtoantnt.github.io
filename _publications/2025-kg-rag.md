@@ -1,10 +1,8 @@
 ---
 title: "KG-RAG: Enhancing GUI Agent Decision-Making via Knowledge Graph-Driven Retrieval-Augmented Generation"
 collection: publications
-category: conferences
 permalink: /publication/2025-kg-rag
-excerpt: 'Enhancing GUI Agent Decision-Making via Knowledge Graph-Driven Retrieval-Augmented Generation.'
 date: 2025-01-01
 venue: 'Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing'
-citation: 'Z Guan, JCL Li, Z Hou, P Zhang, D Xu, Y Zhao, M Wu, J Chen, TT Nguyen, et al. "KG-RAG: Enhancing GUI Agent Decision-Making via Knowledge Graph-Driven Retrieval-Augmented Generation." <i>Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing</i>, 2025.'
+citation: 'KG-RAG: Enhancing GUI Agent Decision-Making via Knowledge Graph-Driven Retrieval-Augmented Generation. Ziyi Guan, Jason Chun Lok Li, Zhijian Hou, Pingping Zhang, Donglai Xu, Yuzhi Zhao, Mengyang Wu, Jinpeng Chen, Thanh-Toan Nguyen, et al. Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing, 2025.'
 ---

@@ -1,10 +1,8 @@
 ---
-title: "A certified decision procedure for tree shares"
+title: "A Certified Decision Procedure for Tree Shares"
 collection: publications
-category: conferences
 permalink: /publication/2017-tree-shares
-excerpt: 'A certified decision procedure for tree shares.'
 date: 2017-01-01
 venue: 'International Conference on Formal Engineering Methods'
-citation: 'XB Le, TT Nguyen, WN Chin, A Hobor. "A certified decision procedure for tree shares." <i>International Conference on Formal Engineering Methods</i>, 2017.'
+citation: 'A Certified Decision Procedure for Tree Shares. Xuan-Bach Le, Thanh-Toan Nguyen, Wei-Ngan Chin, Aquinas Hobor. International Conference on Formal Engineering Methods, 2017.'
 ---
