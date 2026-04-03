@@ -11,35 +11,45 @@ redirect_from:
 
 Education
 ======
-* Ph.D in Version Control Theory, GitHub University, 2018 (expected)
-* M.S. in Jekyll, GitHub University, 2014
-* B.S. in GitHub, GitHub University, 2012
+* Ph.D. in Computer Science, National University of Singapore, 2016 - 2022
+* B.S. in Computer Science, VNU University of Engineering and Technology, 2011 - 2015
 
 Work experience
 ======
-* Spring 2024: Academic Pages Collaborator
-  * GitHub University
-  * Duties includes: Updates and improvements to template
-  * Supervisor: The Users
+* October 2023 - Present: Researcher
+  * Huawei, Hong Kong SAR
+  * Applying formal methods to solve practical problems, including TLA+ for modeling distributed systems, VeriFast for verifying data structure programs, and property-based testing
 
-* Fall 2015: Research Assistant
-  * GitHub University
-  * Duties included: Merging pull requests
-  * Supervisor: Professor Hub
+* April 2022 - October 2023: Research Fellow
+  * National University of Singapore
 
-* Summer 2015: Research Assistant
-  * GitHub University
-  * Duties included: Tagging issues
-  * Supervisor: Professor Git
+* September 2019 - December 2019: Applied Scientist Intern
+  * Amazon, London, United Kingdom
+
+* February 2016 - July 2016: Research Assistant
+  * NUS Computing, Singapore
+
+* July 2015 - January 2016: Internship Student
+  * National University of Singapore
+
+* January 2015 - March 2015: Research Student
+  * JAIST, Ishikawa, Japan
+
+* April 2014 - October 2014: Software Developer
+  * FPT Software, Hanoi, Vietnam
   
 Skills
 ======
-* Skill 1
-* Skill 2
-  * Sub-skill 2.1
-  * Sub-skill 2.2
-  * Sub-skill 2.3
-* Skill 3
+* Static Analysis
+* TLA+
+* Formal Verification
+
+Languages
+======
+* English (Full Professional)
+* Vietnamese (Native or Bilingual)
+* Chinese (Professional Working)
+* Cantonese (Elementary)
 
 Publications
 ======
@@ -58,7 +68,3 @@ Teaching
   <ul>{% for post in site.teaching reversed %}
     {% include archive-single-cv.html %}
   {% endfor %}</ul>
-  
-Service and leadership
-======
-* Currently signed in to 43 different slack teams
