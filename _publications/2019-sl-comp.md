@@ -4,5 +4,5 @@ collection: publications
 permalink: /publication/2019-sl-comp
 date: 2019-01-01
 venue: 'International Conference on Tools and Algorithms for the Construction and Analysis of Systems'
-citation: 'SL-COMP: Competition of Solvers for Separation Logic. M Sighireanu, JA Navarro Pérez, A Rybalchenko, N Gorogiannis, R Iosif, et al. International Conference on Tools and Algorithms for the Construction and Analysis of Systems, 2019.'
+citation: 'M Sighireanu, JA Navarro Pérez, A Rybalchenko, N Gorogiannis, R Iosif, et al.'
 ---
