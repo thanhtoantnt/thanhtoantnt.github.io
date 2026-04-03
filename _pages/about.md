@@ -29,7 +29,7 @@ Before that, I was an Applied Scientist Intern at Amazon, London, from September
 
 - Interoperability in Blockchain: A Survey. Kunpeng Ren, Nhut-Minh Ho, Dumitrel Loghin, **Thanh-Toan Nguyen**, Beng Chin Ooi, Quang-Trung Ta, Feida Zhu. IEEE Transactions on Knowledge and Data Engineering, 2023.
 
-- KG-RAG: Enhancing GUI Agent Decision-Making via Knowledge Graph-Driven Retrieval-Augmented Generation. Ziyi Guan, Jason Chun Lok Li, Zhijian Hou, Pingping Zhang, Donglai Xu, Yuzhi Zhao, Mengyang Wu, Jinpeng Chen, **Thanh-Toan Nguyen**, et al. Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing, 2025.
+- KG-RAG: Enhancing GUI Agent Decision-Making via Knowledge Graph-Driven Retrieval-Augmented Generation. Ziyi Guan, Jason Chun Lok Li, Zhijian Hou, Pingping Zhang, Donglai Xu, Yuzhi Zhao, Mengyang Wu, Jinpeng Chen, **Thanh-Toan Nguyen**, Pengfei Xian, Wenao Ma, Shengchao Qin, Graziano Chesi, Ngai Wong. Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing, 2025.
 
 - Automated Repair of Heap-Manipulating Programs using Deductive Synthesis. **Thanh-Toan Nguyen**, Quang-Trung Ta, Ilya Sergey, Wei-Ngan Chin. International Conference on Verification, Model Checking, and Abstract Interpretation, 2021.
 
