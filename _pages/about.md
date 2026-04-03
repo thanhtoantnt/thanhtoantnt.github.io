@@ -13,7 +13,7 @@ redirect_from:
 
 I am a researcher at Huawei Hong Kong, working on applying formal methods to solve practical problems inside Huawei.
 
-I received the Ph.D. degree in Computer Science from the National University of Singapore in 2022, and the B.Eng. degree in Computer Science from VNU University of Engineering and Technology in 2015.
+I received the Ph.D. degree in Computer Science from the National University of Singapore in 2022, and the B.S. in Computer Science from VNU University of Engineering and Technology in 2015.
 
 My research interests include formal verification, static analysis, and program repair.
 
