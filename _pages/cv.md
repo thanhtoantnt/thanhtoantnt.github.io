@@ -37,12 +37,6 @@ Work experience
 
 * April 2014 - October 2014: Software Developer
   * FPT Software, Hanoi, Vietnam
-  
-Skills
-======
-* Static Analysis
-* TLA+
-* Formal Verification
 
 Languages
 ======
