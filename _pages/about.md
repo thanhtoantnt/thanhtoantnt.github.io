@@ -1,12 +1,38 @@
 ---
 permalink: /
-title: "Researcher at Huawei Hong Kong Research Center"
+title: "Thanh-Toan Nguyen"
 author_profile: true
 redirect_from: 
   - /about/
   - /about.html
 ---
 
-I am a researcher at Huawei Hong Kong Research Center. We work on applying formal methods to solve practical problems inside Huawei. For example, we use TLA+ for modeling distributed systems, VeriFast for verifying data structure programs, and property-based testing to check the correctness of the implementation w.r.t. the models.
+{% include base_path %}
 
-My top skills include Static Analysis, TLA+, and Formal Verification.
+# **Short Bio**
+
+I am a researcher at Huawei Hong Kong Research Center, working on applying formal methods to solve practical problems inside Huawei. We use TLA+ for modeling distributed systems, VeriFast for verifying data structure programs, and property-based testing to check the correctness of the implementation w.r.t. the models.
+
+I received the Ph.D. degree in Computer Science from the National University of Singapore in 2022, and the B.Eng. degree in Computer Science from VNU University of Engineering and Technology in 2015.
+
+My research interests include formal verification, static analysis, TLA+, and program repair.
+
+# **Working Experiences**
+
+I am a researcher at Huawei Hong Kong Research Center since October 2023, focusing on applying formal methods to distributed systems and program verification.
+
+Previously, I was a Research Fellow at the National University of Singapore from April 2022 to October 2023.
+
+Before that, I was an Applied Scientist Intern at Amazon, London, from September 2019 to December 2019. I was also a Research Assistant at NUS Computing from February 2016 to July 2016, an Internship Student at the National University of Singapore from July 2015 to January 2016, a Research Student at JAIST, Japan from January 2015 to March 2015, and a Software Developer at FPT Software, Vietnam from April 2014 to October 2014.
+
+# **Selected Publication**
+
+- Interoperability in Blockchain: A Survey. Kunpeng Ren, Nhut-Minh Ho, Dinh Loghin, **Thanh-Toan Nguyen**, Beng Chin Ooi, Quang Thuy Ta, Fengshuo Zhu. IEEE Transactions on Knowledge and Data Engineering, 2023.
+
+- KG-RAG: Enhancing GUI Agent Decision-Making via Knowledge Graph-Driven Retrieval-Augmented Generation. Ziyi Guan, Jason Chun Lok Li, Zhijian Hou, Pingping Zhang, Donglai Xu, Yuzhi Zhao, Mengyang Wu, Jinpeng Chen, **Thanh-Toan Nguyen**, et al. Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing, 2025.
+
+- Automated Repair of Heap-Manipulating Programs using Deductive Synthesis. **Thanh-Toan Nguyen**, Quang-Trung Ta, Ilya Sergey, Wei-Ngan Chin. International Conference on Verification, Model Checking, and Abstract Interpretation, 2021.
+
+- Automatic Program Repair Using Formal Verification and Expression Templates. **Thanh-Toan Nguyen**, Quang-Trung Ta, Wei-Ngan Chin. International Conference on Verification, Model Checking, and Abstract Interpretation, 2019.
+
+- A Certified Decision Procedure for Tree Shares. Xuan-Bach Le, **Thanh-Toan Nguyen**, Wei-Ngan Chin, Aquinas Hobor. International Conference on Formal Engineering Methods, 2017.
