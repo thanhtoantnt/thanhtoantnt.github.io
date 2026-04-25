@@ -136,7 +136,7 @@ let lessonScore = 0;
 let lessonQuestions = 0;
 let lessonCorrect = 0;
 
-function openLesson(n){currentLesson=n;lessonScore=0;lessonQuestions=0;lessonCorrect=0;document.getElementById('home').classList.remove('active');document.getElementById('lesson').classList.add('active');const l=document.getElementById('lesson');switch(n){case 1:l.innerHTML=lessonCounting();break;case 2:l.innerHTML=lessonComparison();break;case 3:l.innerHTML=lessonAddition();break;case 4:l.innerHTML=lessonSubtraction();break;case 5:l.innerHTML=lessonShapes();break;case 6:l.innerHTML=lesson3DShapes();break;case 7:l.innerHTML=lessonPosition();break;case 8:l.innerHTML=lessonReview()}}
+function openLesson(n){currentLesson=n;lessonScore=0;lessonQuestions=0;lessonCorrect=0;document.getElementById('home').classList.remove('active');document.getElementById('lesson').classList.add('active');const l=document.getElementById('lesson');switch(n){case 1:l.innerHTML=lessonCounting();setTimeout(initCounting,0);break;case 2:l.innerHTML=lessonComparison();setTimeout(initComparison,0);break;case 3:l.innerHTML=lessonAddition();setTimeout(initAddition,0);break;case 4:l.innerHTML=lessonSubtraction();setTimeout(initSubtraction,0);break;case 5:l.innerHTML=lessonShapes();setTimeout(initShapes,0);break;case 6:l.innerHTML=lesson3DShapes();setTimeout(init3DShapes,0);break;case 7:l.innerHTML=lessonPosition();setTimeout(initPosition,0);break;case 8:l.innerHTML=lessonReview();setTimeout(initReview,0)}}
 function goHome(){document.getElementById('lesson').classList.remove('active');document.getElementById('home').classList.add('active');updateProgress()}
 function updateProgress(){const p = Math.round(completedLessons.size/8*100);document.getElementById('progress').style.width=p+'%'}
 function markComplete(){if(currentLesson){completedLessons.add(currentLesson);const topic=document.getElementById('topic'+currentLesson);if(topic)topic.classList.add('completed')}updateProgress()}
@@ -156,7 +156,7 @@ return `<button class="back-btn" onclick="goHome()">← Về trang chính</butto
 <div class="option-grid" id="cq2opts"></div>
 <div class="feedback" id="fb2"></div></div>
 <div class="action-row"><button class="btn btn-accent" onclick="finishLesson()">Hoàn thành bài học ✅</button></div>`;
-initCounting()}
+}
 
 function initCounting(){newCountQ();newCountSelectQ()}
 let countQNum=0;
@@ -176,7 +176,7 @@ return `<button class="back-btn" onclick="goHome()">← Về trang chính</butto
 <div class="feedback" id="fbComp"></div>
 <div class="action-row"><button class="btn btn-blue" onclick="newCompQ()">Câu mới 🎲</button></div></div>
 <div class="action-row"><button class="btn btn-accent" onclick="finishLesson()">Hoàn thành bài học ✅</button></div>`;
-initComparison()}
+}
 
 function initComparison(){newCompQ()}
 let compA=0,compB=0;
@@ -195,7 +195,6 @@ return `<button class="back-btn" onclick="goHome()">← Về trang chính</butto
 <div class="feedback" id="fbAdd"></div>
 <div class="action-row"><button class="btn btn-blue" onclick="newAddQ()">Câu mới 🎲</button></div></div>
 <div class="action-row"><button class="btn btn-accent" onclick="finishLesson()">Hoàn thành bài học ✅</button></div>`;
-initAddition()}
 
 let addA=0,addB=0;
 function initAddition(){newAddQ()}
@@ -212,7 +211,6 @@ return `<button class="back-btn" onclick="goHome()">← Về trang chính</butto
 <div class="feedback" id="fbSub"></div>
 <div class="action-row"><button class="btn btn-blue" onclick="newSubQ()">Câu mới 🎲</button></div></div>
 <div class="action-row"><button class="btn btn-accent" onclick="finishLesson()">Hoàn thành bài học ✅</button></div>`;
-initSubtraction()}
 
 let subA=0,subB=0;
 function initSubtraction(){newSubQ()}
@@ -234,7 +232,6 @@ return `<button class="back-btn" onclick="goHome()">← Về trang chính</butto
 <div class="option-grid" id="shapeOpts"></div>
 <div class="feedback" id="fbShape"></div></div>
 <div class="action-row"><button class="btn btn-accent" onclick="finishLesson()">Hoàn thành bài học ✅</button></div>`;
-initShapes()}
 
 let shapeNames=['hình tròn','hình vuông','hình tam giác','hình chữ nhật'];
 let shapeSymbols=['●','■','▲','▬'];
@@ -255,7 +252,6 @@ return `<button class="back-btn" onclick="goHome()">← Về trang chính</butto
 <div class="exercise-box"><h3>Bài tập: Đoán tên khối hình</h3><div id="d3q"></div>
 <div class="feedback" id="fb3d"></div></div>
 <div class="action-row"><button class="btn btn-accent" onclick="finishLesson()">Hoàn thành bài học ✅</button></div>`;
-init3DShapes()}
 
 let is3DCube=true;
 function init3DShapes(){new3DQ()}
@@ -271,7 +267,6 @@ return `<button class="back-btn" onclick="goHome()">← Về trang chính</butto
 <div class="exercise-box"><h3>Bài tập: Chọn vị trí đúng</h3><div id="posQ"></div>
 <div class="feedback" id="fbPos"></div></div>
 <div class="action-row"><button class="btn btn-accent" onclick="finishLesson()">Hoàn thành bài học ✅</button></div>`;
-initPosition()}
 
 let posQuestions=[{q:'Đồng hồ treo trên tường. Đồng hồ ở vị trí nào?',opts:['trên','dưới','trái','phải'],ans:0},
 {q:'Thảm trải ở sàn nhà. Thảm ở vị trí nào so với bàn?',opts:['trên','dưới','trước','sau'],ans:1},
@@ -292,7 +287,6 @@ return `<button class="back-btn" onclick="goHome()">← Về trang chính</butto
 <div class="nav-row"><h2>🏆 Ôn Tập Tổng Hợp</h2><span class="emoji" id="lscore8"></span></div>
 <div class="lesson-content"><p>Làm 8 câu hỏi để ôn lại <span class="highlight">tất cả kiến thức</span> đã học nhé!</p></div>${q}
 <div class="action-row"><button class="btn btn-accent" onclick="finishReview()">Nộp bài ✅</button></div>`;
-initReview()}
 
 let reviewAnswered=new Array(8).fill(false);
 let reviewScores=new Array(8).fill(0);
