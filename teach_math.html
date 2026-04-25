@@ -168,23 +168,42 @@ return `<button class="back-btn" onclick="goHome()">← Về trang chính</butto
 <div class="lesson-content"><p>Trong bài học này, các em sẽ <span class="highlight">học đếm</span> từ 0 đến 10. Hãy cùng tập đếm nhé!</p>
 <div class="number-row">${[0,1,2,3,4,5,6,7,8,9,10].map(n=>`<div class="num-box">${n}</div>`).join('')}</div>
 <div class="example"><strong>Cách đọc:</strong><br>0 - không &nbsp; 1 - một &nbsp; 2 - hai &nbsp; 3 - ba &nbsp; 4 - bốn &nbsp; 5 - năm<br>6 - sáu &nbsp; 7 - bảy &nbsp; 8 - tám &nbsp; 9 - chín &nbsp; 10 - mười</div></div>
-<div class="exercise-box"><h3>Bài 1: Đếm đồ vật</h3><div id="countEx1"></div>
+<div class="exercise-box"><div id="countEx1"></div>
 <div class="feedback" id="fb1"></div>
 <div class="action-row"><button class="btn btn-blue" onclick="newCountQ()">Câu hỏi mới 🎲</button></div></div>
-<div class="exercise-box"><h3>Bài 2: Chọn số đúng</h3><p id="cq2">Có mấy quả táo?</p>
-<div class="count-area" id="cq2items"></div>
-<div class="option-grid" id="cq2opts"></div>
-<div class="feedback" id="fb2"></div></div>
 <div class="action-row"><button class="btn btn-accent" onclick="finishLesson()">Hoàn thành bài học ✅</button></div>`;
 }
 
-function initCounting(){newCountQ();newCountSelectQ()}
+function initCounting(){newCountQ()}
 let countQNum=0;
-function newCountQ(){countQNum=Math.floor(Math.random()*10)+1;const items=[];const emojis=['🐘','🦁','🐰','🐸','🐶','🐱','🐔','🐟','🦋','🌻','🍎','🍓'];const em=emojis[Math.floor(Math.random()*emojis.length)];for(let i=0;i<countQNum;i++)items.push(`<span class="count-item">${em}</span>`);document.getElementById('countEx1').innerHTML=`<p style="text-align:center;font-size:1.3em">Có mấy ${em}?</p><div class="count-area">${items.join('')}</div>`;const input=`<input class="math-input" id="countInput" type="number" min="0" max="10" placeholder="?" onkeyup="if(event.key==='Enter')checkCount()"><button class="btn btn-green" onclick="checkCount()">Kiểm tra ✓</button>`;document.getElementById('countEx1').innerHTML+=`<div class="input-row">${input}</div>`;document.getElementById('fb1').textContent='';document.getElementById('fb1').className='feedback'}
+function newCountQ(){
+  if(Math.random()<0.5){newCountInputQ()}else{newCountSelectQ()}
+}
+function newCountInputQ(){
+  countQNum=Math.floor(Math.random()*10)+1;
+  const emojis=['🐘','🦁','🐰','🐸','🐶','🐱','🐔','🐟','🦋','🌻','🍎','🍓'];
+  const em=emojis[Math.floor(Math.random()*emojis.length)];
+  var items=[];for(let i=0;i<countQNum;i++)items.push(`<span class="count-item">${em}</span>`);
+  document.getElementById('countEx1').innerHTML=`<h3>Đếm đồ vật ✏️</h3><p style="text-align:center;font-size:1.3em">Có mấy ${em}?</p><div class="count-area">${items.join('')}</div><div class="input-row"><input class="math-input" id="countInput" type="number" min="0" max="10" placeholder="?" onkeyup="if(event.key==='Enter')checkCount()"><button class="btn btn-green" onclick="checkCount()">Kiểm tra ✓</button></div>`;
+  document.getElementById('fb1').textContent='';document.getElementById('fb1').className='feedback'
+}
 function checkCount(){const val=parseInt(document.getElementById('countInput').value);const fb=document.getElementById('fb1');const inp=document.getElementById('countInput');if(val===countQNum){fb.textContent='⭑ Đúng rồi! Giỏi quá!';fb.className='feedback correct';inp.className='math-input correct';lessonScore++;lessonCorrect++}else{fb.textContent=`Sai rồi. Có ${countQNum} đồ vật. Thử lại nhé!`;fb.className='feedback wrong';inp.className='math-input wrong'}lessonQuestions++;updateLessonScore()}
+
 let selectQNum=0;
-function newCountSelectQ(){selectQNum=Math.floor(Math.random()*10)+1;const emojis=['🐘','🦁','🐰','🐸','🐶','🐱','🐔','🐟','🦋','🌻'];const em=emojis[Math.floor(Math.random()*emojis.length)];const items=[];for(let i=0;i<selectQNum;i++)items.push(`<span class="count-item">${em}</span>`);document.getElementById('cq2').textContent=`Có mấy ${em}?`;document.getElementById('cq2items').innerHTML=items.join('');const correct=selectQNum;const opts=[correct];while(opts.length<4){const x=Math.floor(Math.random()*11);if(!opts.includes(x))opts.push(x)}opts.sort(()=>Math.random()-.5);document.getElementById('cq2opts').innerHTML=opts.map(o=>`<div class="option-btn" onclick="checkSelectQ(${o},this)">${o}</div>`).join('');document.getElementById('fb2').textContent='';document.getElementById('fb2').className='feedback'}
-function checkSelectQ(val,el){const fb=document.getElementById('fb2');if(val===selectQNum){fb.textContent='⭑ Chính xác!';fb.className='feedback correct';el.classList.add('correct');lessonScore++;lessonCorrect++}else{fb.textContent=`Không đúng. Đáp án là ${selectQNum}.`;fb.className='feedback wrong';el.classList.add('wrong');const all=document.querySelectorAll('#cq2opts .option-btn');all.forEach(b=>{const v=parseInt(b.textContent);if(v===selectQNum)b.classList.add('correct');b.style.pointerEvents='none'})}lessonQuestions++;updateLessonScore();setTimeout(newCountSelectQ,1500)}
+function newCountSelectQ(){
+  selectQNum=Math.floor(Math.random()*10)+1;
+  const emojis=['🐘','🦁','🐰','🐸','🐶','🐱','🐔','🐟','🦋','🌻'];
+  const em=emojis[Math.floor(Math.random()*emojis.length)];
+  var items=[];for(let i=0;i<selectQNum;i++)items.push(`<span class="count-item">${em}</span>`);
+  const correct=selectQNum;
+  const opts=[correct];while(opts.length<4){const x=Math.floor(Math.random()*11);if(!opts.includes(x))opts.push(x)}opts.sort(()=>Math.random()-.5);
+  document.getElementById('countEx1').innerHTML=`<h3>Chọn số đúng 🔢</h3><p style="text-align:center;font-size:1.2em">Có mấy ${em}?</p><div class="count-area">${items.join('')}</div><div class="option-grid">${opts.map(o=>`<div class="option-btn" onclick="checkSelectQ(${o},this)">${o}</div>`).join('')}</div>`;
+  document.getElementById('fb1').textContent='';document.getElementById('fb1').className='feedback'
+}
+function checkSelectQ(val,el){
+  const fb=document.getElementById('fb1');document.querySelectorAll('#countEx1 .option-btn').forEach(b=>b.style.pointerEvents='none');
+  if(val===selectQNum){fb.textContent='⭑ Chính xác!';fb.className='feedback correct';el.classList.add('correct');lessonScore++;lessonCorrect++}else{fb.textContent=`Không đúng. Đáp án là ${selectQNum}.`;fb.className='feedback wrong';el.classList.add('wrong');document.querySelectorAll('#countEx1 .option-btn').forEach(b=>{if(parseInt(b.textContent)===selectQNum)b.classList.add('correct')})}lessonQuestions++;updateLessonScore();setTimeout(newCountQ,1800)
+}
 function updateLessonScore(){document.getElementById('lscore').textContent='✅'.repeat(lessonCorrect)+'❌'.repeat(lessonQuestions-lessonCorrect)}
 
 function lessonComparison(){
@@ -201,28 +220,50 @@ return `<button class="back-btn" onclick="goHome()">← Về trang chính</butto
 </div>
 <p style="margin-top:8px">5 con sư tử <span class="highlight">nhiều hơn</span> 3 con → Cá sấu há miệng về 5! <strong>5 > 3</strong></p>
 </div></div>
-<div class="comp-stage" id="compStage">
-<div class="exercise-box"><h3>Bước 1: So sánh bằng hình ảnh 🖼️</h3><p style="text-align:center;color:var(--text2)">Nhìn số đồ vật rồi chọn dấu. Nhớ: cá sấu há miệng về phía nhiều hơn!</p><div id="compQ1"></div>
-<div class="feedback" id="fbComp1"></div>
-<div class="action-row"><button class="btn btn-blue" onclick="newCompQ1()">Câu mới 🎲</button></div></div>
-<div class="exercise-box"><h3>Bước 2: So sánh bằng số 🔢</h3><p style="text-align:center;color:var(--text2)">Không có hình ảnh, chỉ có số. Hãy nhớ: số lớn hơn là "món ngon" của cá sấu!</p><div id="compQ2"></div>
-<div class="feedback" id="fbComp2"></div>
-<div class="action-row"><button class="btn btn-blue" onclick="newCompQ2()">Câu mới 🎲</button></div></div>
-</div>
+<div class="exercise-box"><div id="compQ1"></div>
+<div class="feedback" id="fbComp"></div>
+<div class="action-row"><button class="btn btn-blue" onclick="newCompQ()">Câu hỏi mới 🎲</button></div></div>
 <div class="action-row"><button class="btn btn-accent" onclick="finishLesson()">Hoàn thành bài học ✅</button></div>`;
 }
 
-function initComparison(){newCompQ1();newCompQ2()}
+function initComparison(){newCompQ()}
 
-let compData1={a:0,b:0};
-function newCompQ1(){compData1.a=Math.floor(Math.random()*5)+1;compData1.b=Math.floor(Math.random()*5)+1;const ems=['🐧','🐰','🐸','🐶','🐱','🍎','⭐','🌸','🐟','🦋'];const e=ems[Math.floor(Math.random()*ems.length)];const ra=[],rb=[];for(let i=0;i<compData1.a;i++)ra.push(`<span class="count-item">${e}</span>`);for(let i=0;i<compData1.b;i++)rb.push(`<span class="count-item">${e}</span>`);const opts=[{t:'Bên trái nhiều hơn ＞',v:'>'},{t:'Bên phải nhiều hơn ＜',v:'<'},{t:'Hai bên bằng nhau ＝',v:'='}];document.getElementById('compQ1').innerHTML=`<div class="compare-cards"><div class="compare-card"><div class="count-area" style="flex-wrap:wrap;justify-content:center;min-width:80px">${ra.join('')}</div><p style="margin-top:6px;font-weight:700">Bên trái</p></div><div style="font-size:2em;animation:float 2s ease-in-out infinite">🤔</div><div class="compare-card"><div class="count-area" style="flex-wrap:wrap;justify-content:center;min-width:80px">${rb.join('')}</div><p style="margin-top:6px;font-weight:700">Bên phải</p></div></div><div class="option-grid">${opts.map(o=>'<div class="option-btn" style="font-size:.85em;min-width:140px" onclick="checkComp1(&quot;'+o.v+'&quot;,this)">'+o.t+'</div>').join('')}</div>`;document.getElementById('fbComp1').textContent='';document.getElementById('fbComp1').className='feedback'}
-function checkComp1(sign,el){let a=compData1.a,b=compData1.b,correctSign=a>b?'v':a<b?'^':'=',word=a>b?'Bên phải nhiều hơn':a<b?'Bên trái nhiều hơn':'Hai bên bằng nhau';const fb=document.getElementById('fbComp1');if(sign===correctSign){fb.textContent='⭑ Đúng! '+word+' — Cá sấu quay về phía có nhiều đồ hơn!';fb.className='feedback correct';el.classList.add('correct');lessonScore++;lessonCorrect++}else{fb.textContent='Sai rồi. '+word+'.';fb.className='feedback wrong';el.classList.add('wrong')}lessonQuestions++;document.querySelectorAll('#compQ1 .option-btn').forEach(b=>b.style.pointerEvents='none');document.querySelectorAll('#compQ1 .option-btn').forEach(b=>{if(b.textContent===correctSign)b.classList.add('correct')});updateLessonScoreComp();setTimeout(newCompQ1,2000)}
-
-let compData2={a:0,b:0};
-function newCompQ2(){compData2.a=Math.floor(Math.random()*10);compData2.b=Math.floor(Math.random()*10);document.getElementById('compQ2').innerHTML=`<div class="compare-cards"><div class="compare-card" style="min-width:80px"><div class="n" style="font-size:3em">${compData2.a}</div></div><div style="font-size:2em;animation:float 1.5s ease-in-out infinite">🐊</div><div class="compare-card" style="min-width:80px"><div class="n" style="font-size:3em">${compData2.b}</div></div></div><p style="text-align:center;font-size:1.2em;margin:12px 0">${compData2.a} <span class="highlight">?</span> ${compData2.b}</p><div class="option-grid">${['>','<','='].map(s=>'<div class="option-btn" style="font-size:1.5em" onclick="checkComp2(&quot;'+s+'&quot;,this)">'+s+'</div>').join('')}</div>`;document.getElementById('fbComp2').textContent='';document.getElementById('fbComp2').className='feedback'}
-function checkComp2(sign,el){let a=compData2.a,b=compData2.b,correctSign=a>b?'>':a<b?'<':'=',word=a>b?'lớn hơn':a<b?'bé hơn':'bằng';const fb=document.getElementById('fbComp2');if(sign===correctSign){fb.textContent='⭑ Đúng! '+a+' '+correctSign+' '+b+' ('+a+' '+word+' '+b+') — Cá sấu rất vui! 🎉';fb.className='feedback correct';el.classList.add('correct');lessonScore++;lessonCorrect++}else{fb.textContent='Chưa đúng. '+a+' '+word+' '+b+'. Dấu đúng là: '+correctSign;fb.className='feedback wrong';el.classList.add('wrong')}lessonQuestions++;document.querySelectorAll('#compQ2 .option-btn').forEach(b=>b.style.pointerEvents='none');document.querySelectorAll('#compQ2 .option-btn').forEach(b=>{if(b.textContent===correctSign)b.classList.add('correct')});updateLessonScoreComp();setTimeout(newCompQ2,2000)}
-
-function updateLessonScoreComp(){document.getElementById('lscore2').textContent='✅'.repeat(lessonCorrect)+'❌'.repeat(lessonQuestions-lessonCorrect)}
+let compData={a:0,b:0,mode:0};
+function newCompQ(){
+  if(Math.random()<0.5){newCompVisualQ()}else{newCompNumberQ()}
+}
+function newCompVisualQ(){
+  compData.a=Math.floor(Math.random()*5)+1;compData.b=Math.floor(Math.random()*5)+1;compData.mode=0;
+  const ems=['🐧','🐰','🐸','🐶','🐱','🍎','⭐','🌸','🐟','🦋'];
+  const e=ems[Math.floor(Math.random()*ems.length)];
+  var ra=[],rb=[];
+  for(let i=0;i<compData.a;i++)ra.push(`<span class="count-item">${e}</span>`);
+  for(let i=0;i<compData.b;i++)rb.push(`<span class="count-item">${e}</span>`);
+  const opts=[{text:'Bên trái nhiều hơn ＞',value:'>'},
+              {text:'Bên phải nhiều hơn ＜',value:'<'},
+              {text:'Hai bên bằng nhau =',value:'='}];
+  document.getElementById('compQ1').innerHTML=`<h3>So sánh hình ảnh 🖼️</h3><p style="text-align:center;color:var(--text2);margin-bottom:12px">Nhìn đồ vật, chọn bên nào nhiều hơn. Nhớ cá sấu há miệng về phía nhiều!</p><div class="compare-cards"><div class="compare-card"><div class="count-area" style="flex-wrap:wrap;justify-content:center;min-width:80px">${ra.join('')}</div><p style="margin-top:6px;font-weight:700">Bên trái</p></div><div style="font-size:2em;animation:float 2s ease-in-out infinite">🤔</div><div class="compare-card"><div class="count-area" style="flex-wrap:wrap;justify-content:center;min-width:80px">${rb.join('')}</div><p style="margin-top:6px;font-weight:700">Bên phải</p></div></div><div class="option-grid">${opts.map(o=>`<div class="option-btn" style="font-size:.85em;min-width:140px" onclick="checkComp('${o.value}',this)">${o.text}</div>`).join('')}</div>`;
+}
+function newCompNumberQ(){
+  compData.a=Math.floor(Math.random()*10);compData.b=Math.floor(Math.random()*10);compData.mode=1;
+  document.getElementById('compQ1').innerHTML=`<h3>So sánh bằng số 🔢</h3><p style="text-align:center;color:var(--text2);margin-bottom:12px">Không có hình ảnh, chỉ có số. Nhớ: cá sấu há miệng về số lớn hơn!</p><div class="compare-cards"><div class="compare-card" style="min-width:80px"><div class="n" style="font-size:3em">${compData.a}</div></div><div style="font-size:2em;animation:float 2s ease-in-out infinite">🐊</div><div class="compare-card" style="min-width:80px"><div class="n" style="font-size:3em">${compData.b}</div></div></div><p style="text-align:center;font-size:1.3em;margin:12px 0">${compData.a} <span class="highlight">?</span> ${compData.b}</p><div class="option-grid">${['>','<','='].map(s=>`<div class="option-btn" style="font-size:1.5em" onclick="checkComp('${s}',this)">${s}</div>`).join('')}</div>`;
+  document.getElementById('fbComp').textContent='';document.getElementById('fbComp').className='feedback'
+}
+function checkComp(sign,el){
+  var a=compData.a,b=compData.b,correctSign=a>b?'>':a<b?'<':'=';
+  var word=a>b?'lớn hơn':a<b?'bé hơn':'bằng';
+  const fb=document.getElementById('fbComp');
+  document.querySelectorAll('#compQ1 .option-btn').forEach(b=>b.style.pointerEvents='none');
+  if(sign===correctSign){
+    fb.textContent='⭑ Đúng! '+a+' '+correctSign+' '+b+' ('+a+' '+word+' '+b+') — Cá sấu rất vui! 🎉';
+    fb.className='feedback correct';el.classList.add('correct');lessonScore++;lessonCorrect++
+  }else{
+    fb.textContent='Chưa đúng. '+a+' '+word+' '+b+'. Dấu đúng là: '+correctSign;
+    fb.className='feedback wrong';el.classList.add('wrong')
+  }
+  lessonQuestions++;document.querySelectorAll('#compQ1 .option-btn').forEach(b=>{if(b.textContent===correctSign)b.classList.add('correct')});
+  updateLessonScoreComp();setTimeout(newCompQ,2000)
+}
 
 function lessonAddition(){
 return `<button class="back-btn" onclick="goHome()">← Về trang chính</button>
