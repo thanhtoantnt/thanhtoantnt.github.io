@@ -75,6 +75,7 @@ h2{font-size:1.5em;margin-bottom:16px}
 @keyframes bounceIn{0%{transform:scale(0)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
 @keyframes tada{0%,100%{transform:scale(1)}10%,20%{transform:scale(.9)rotate(-3deg)}30%,50%,70%,90%{transform:scale(1.1)rotate(3deg)}40%,60%,80%{transform:scale(1.1)rotate(-3deg)}}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .nav-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
 .compare-cards{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;margin:20px 0}
 .compare-card{background:var(--card);border-radius:var(--radius);padding:20px;text-align:center;border:3px solid #dee2e6;min-width:80px}
@@ -189,20 +190,38 @@ function updateLessonScore(){document.getElementById('lscore').textContent='✅'
 function lessonComparison(){
 return `<button class="back-btn" onclick="goHome()">← Về trang chính</button>
 <div class="nav-row"><h2>⚖️ So Sánh: >, <, =</h2><span class="emoji" id="lscore2"></span></div>
-<div class="lesson-content"><p>Hôm nay chúng ta học về <span class="highlight">so sánh</span> các số: lớn hơn, bé hơn, bằng nhau.</p>
-<div class="example"><strong>Lớn hơn (>):</strong> 5 > 3 (Năm <span class="highlight">lớn hơn</span> ba)<br><strong>Bé hơn (<):</strong> 2 < 6 (Hai <span class="highlight">bé hơn</span> sáu)<br><strong>Bằng nhau (=):</strong> 4 = 4 (Bốn <span class="highlight">bằng</span> bốn)</div></div>
-<div class="exercise-box"><h3>Bài 1: Điền dấu >, <, hoặc =</h3><div id="compQ"></div>
-<div class="feedback" id="fbComp"></div>
-<div class="action-row"><button class="btn btn-blue" onclick="newCompQ()">Câu mới 🎲</button></div></div>
+<div class="lesson-content"><p>Hôm nay chúng ta học <span class="highlight">so sánh</span>! Tưởng tượng con cá sấu tham ăn — nó luôn <span class="highlight">há miệng về phía số lớn hơn</span>!</p>
+<div class="example" style="text-align:center">
+<div style="font-size:2em">🐊</div>
+<p style="margin:4px 0"><strong>Miệng cá sấu luôn quay về số lớn hơn!</strong></p>
+<div class="compare-cards">
+<div class="compare-card"><div class="n">3</div><div class="count-area" style="flex-wrap:wrap">🦁🦁🦁</div></div>
+<div class="croc-mouth" style="font-size:2.5em">🐊</div>
+<div class="compare-card"><div class="n">5</div><div class="count-area" style="flex-wrap:wrap">🦁🦁🦁🦁🦁</div></div>
+</div>
+<p style="margin-top:8px">5 con sư tử <span class="highlight">nhiều hơn</span> 3 con → Cá sấu há miệng về 5! <strong>5 > 3</strong></p>
+</div></div>
+<div class="comp-stage" id="compStage">
+<div class="exercise-box"><h3>Bước 1: So sánh bằng hình ảnh 🖼️</h3><p style="text-align:center;color:var(--text2)">Nhìn số đồ vật rồi chọn dấu. Nhớ: cá sấu há miệng về phía nhiều hơn!</p><div id="compQ1"></div>
+<div class="feedback" id="fbComp1"></div>
+<div class="action-row"><button class="btn btn-blue" onclick="newCompQ1()">Câu mới 🎲</button></div></div>
+<div class="exercise-box"><h3>Bước 2: So sánh bằng số 🔢</h3><p style="text-align:center;color:var(--text2)">Không có hình ảnh, chỉ có số. Hãy nhớ: số lớn hơn là "món ngon" của cá sấu!</p><div id="compQ2"></div>
+<div class="feedback" id="fbComp2"></div>
+<div class="action-row"><button class="btn btn-blue" onclick="newCompQ2()">Câu mới 🎲</button></div></div>
+</div>
 <div class="action-row"><button class="btn btn-accent" onclick="finishLesson()">Hoàn thành bài học ✅</button></div>`;
 }
 
-function initComparison(){newCompQ()}
-let compA=0,compB=0;
-function newCompQ(){compA=Math.floor(Math.random()*10);compB=Math.floor(Math.random()*10);const itemsA=[],itemsB=[];const em=['🐘','🐰','🐸','🐶','🐱','🍎','⭐','🌸','🐟','🚗'];const e=em[Math.floor(Math.random()*em.length)];for(let i=0;i<compA;i++)itemsA.push(`<span class="count-item">${e}</span>`);for(let i=0;i<compB;i++)itemsB.push(`<span class="count-item">${e}</span>`);document.getElementById('compQ').innerHTML=`<div class="compare-cards"><div class="compare-card"><div class="n">${compA}</div><div class="count-area">${itemsA.join('')}</div></div><div class="compare-sign">?</div><div class="compare-card"><div class="n">${compB}</div><div class="count-area">${itemsB.join('')}</div></div></div><div class="option-grid">${['>','<','='].map(s=>`<div class="option-btn" onclick="checkComp('${s}',this)">${s}</div>`).join('')}</div>`;document.getElementById('fbComp').textContent='';document.getElementById('fbComp').className='feedback'}
-function checkComp(sign,el){let answer,correctSign;if(compA>compB){correctSign='>';answer='lớn hơn'}else if(compA<compB){correctSign='<';answer='bé hơn'}else{correctSign='=';answer='bằng'}
-const fb=document.getElementById('fbComp');if(sign===correctSign){fb.textContent=`⭑ Đúng! ${compA} ${sign} ${compB} (${compA} ${answer} ${compB})`;fb.className='feedback correct';el.classList.add('correct');lessonScore++;lessonCorrect++}else{fb.textContent=`Chưa đúng. ${compA} ${answer} ${compB}.`;
-fb.className='feedback wrong';el.classList.add('wrong')}lessonQuestions++;document.querySelectorAll('#compQ .option-btn').forEach(b=>b.style.pointerEvents='none');if(correctSign=='>')document.querySelectorAll('#compQ .option-btn')[0].classList.add('correct');else if(correctSign=='<')document.querySelectorAll('#compQ .option-btn')[1].classList.add('correct');else document.querySelectorAll('#compQ .option-btn')[2].classList.add('correct');updateLessonScoreComp();setTimeout(newCompQ,1800)}
+function initComparison(){newCompQ1();newCompQ2()}
+
+let compData1={a:0,b:0};
+function newCompQ1(){compData1.a=Math.floor(Math.random()*5)+1;compData1.b=Math.floor(Math.random()*5)+1;const ems=['🐧','🐰','🐸','🐶','🐱','🍎','⭐','🌸','🐟','🦋'];const e=ems[Math.floor(Math.random()*ems.length)];const ra=[],rb=[];for(let i=0;i<compData1.a;i++)ra.push(`<span class="count-item">${e}</span>`);for(let i=0;i<compData1.b;i++)rb.push(`<span class="count-item">${e}</span>`);const opts=[{t:'Bên trái nhiều hơn ＞',v:'>'},{t:'Bên phải nhiều hơn ＜',v:'<'},{t:'Hai bên bằng nhau ＝',v:'='}];document.getElementById('compQ1').innerHTML=`<div class="compare-cards"><div class="compare-card"><div class="count-area" style="flex-wrap:wrap;justify-content:center;min-width:80px">${ra.join('')}</div><p style="margin-top:6px;font-weight:700">Bên trái</p></div><div style="font-size:2em;animation:float 2s ease-in-out infinite">🤔</div><div class="compare-card"><div class="count-area" style="flex-wrap:wrap;justify-content:center;min-width:80px">${rb.join('')}</div><p style="margin-top:6px;font-weight:700">Bên phải</p></div></div><div class="option-grid">${opts.map(o=>'<div class="option-btn" style="font-size:.85em;min-width:140px" onclick="checkComp1(&quot;'+o.v+'&quot;,this)">'+o.t+'</div>').join('')}</div>`;document.getElementById('fbComp1').textContent='';document.getElementById('fbComp1').className='feedback'}
+function checkComp1(sign,el){let a=compData1.a,b=compData1.b,correctSign=a>b?'v':a<b?'^':'=',word=a>b?'Bên phải nhiều hơn':a<b?'Bên trái nhiều hơn':'Hai bên bằng nhau';const fb=document.getElementById('fbComp1');if(sign===correctSign){fb.textContent='⭑ Đúng! '+word+' — Cá sấu quay về phía có nhiều đồ hơn!';fb.className='feedback correct';el.classList.add('correct');lessonScore++;lessonCorrect++}else{fb.textContent='Sai rồi. '+word+'.';fb.className='feedback wrong';el.classList.add('wrong')}lessonQuestions++;document.querySelectorAll('#compQ1 .option-btn').forEach(b=>b.style.pointerEvents='none');document.querySelectorAll('#compQ1 .option-btn').forEach(b=>{if(b.textContent===correctSign)b.classList.add('correct')});updateLessonScoreComp();setTimeout(newCompQ1,2000)}
+
+let compData2={a:0,b:0};
+function newCompQ2(){compData2.a=Math.floor(Math.random()*10);compData2.b=Math.floor(Math.random()*10);document.getElementById('compQ2').innerHTML=`<div class="compare-cards"><div class="compare-card" style="min-width:80px"><div class="n" style="font-size:3em">${compData2.a}</div></div><div style="font-size:2em;animation:float 1.5s ease-in-out infinite">🐊</div><div class="compare-card" style="min-width:80px"><div class="n" style="font-size:3em">${compData2.b}</div></div></div><p style="text-align:center;font-size:1.2em;margin:12px 0">${compData2.a} <span class="highlight">?</span> ${compData2.b}</p><div class="option-grid">${['>','<','='].map(s=>'<div class="option-btn" style="font-size:1.5em" onclick="checkComp2(&quot;'+s+'&quot;,this)">'+s+'</div>').join('')}</div>`;document.getElementById('fbComp2').textContent='';document.getElementById('fbComp2').className='feedback'}
+function checkComp2(sign,el){let a=compData2.a,b=compData2.b,correctSign=a>b?'>':a<b?'<':'=',word=a>b?'lớn hơn':a<b?'bé hơn':'bằng';const fb=document.getElementById('fbComp2');if(sign===correctSign){fb.textContent='⭑ Đúng! '+a+' '+correctSign+' '+b+' ('+a+' '+word+' '+b+') — Cá sấu rất vui! 🎉';fb.className='feedback correct';el.classList.add('correct');lessonScore++;lessonCorrect++}else{fb.textContent='Chưa đúng. '+a+' '+word+' '+b+'. Dấu đúng là: '+correctSign;fb.className='feedback wrong';el.classList.add('wrong')}lessonQuestions++;document.querySelectorAll('#compQ2 .option-btn').forEach(b=>b.style.pointerEvents='none');document.querySelectorAll('#compQ2 .option-btn').forEach(b=>{if(b.textContent===correctSign)b.classList.add('correct')});updateLessonScoreComp();setTimeout(newCompQ2,2000)}
+
 function updateLessonScoreComp(){document.getElementById('lscore2').textContent='✅'.repeat(lessonCorrect)+'❌'.repeat(lessonQuestions-lessonCorrect)}
 
 function lessonAddition(){
