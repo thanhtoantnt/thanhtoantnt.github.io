@@ -95,6 +95,21 @@ h2{font-size:1.5em;margin-bottom:16px}
 .mode-tab{padding:8px 18px;background:var(--card);border:2px solid #dee2e6;border-radius:25px;cursor:pointer;font-size:.9em;transition:all .2s}
 .mode-tab:hover{border-color:var(--accent)}
 .mode-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.clock-face{width:200px;height:200px;border-radius:50%;border:4px solid var(--text);position:relative;margin:16px auto;background:var(--card)}
+.clock-center{width:10px;height:10px;background:var(--accent);border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2}
+.clock-hand{position:absolute;bottom:50%;left:50%;transform-origin:bottom center;border-radius:4px}
+.hour-hand{width:6px;height:55px;background:var(--text);margin-left:-3px}
+.minute-hand{width:4px;height:75px;background:var(--blue);margin-left:-2px}
+.clock-number{position:absolute;font-weight:700;font-size:1.1em}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;max-width:350px;margin:16px auto}
+.cal-header{font-weight:700;text-align:center;padding:8px;font-size:.85em;color:var(--text2)}
+.cal-day{text-align:center;padding:10px;border-radius:10px;font-weight:600;cursor:pointer;transition:all .2s}
+.cal-day:hover{background:var(--light)}
+.cal-day.today{background:var(--accent);color:#fff}
+.cal-day.empty{cursor:default}
+.ruler{height:40px;background:linear-gradient(90deg,var(--yellow) 0%,var(--yellow) 100%);border:2px solid var(--text);border-radius:8px;position:relative;margin:16px auto;display:flex;align-items:flex-end}
+.ruler-mark{position:absolute;bottom:0;width:2px;background:var(--text)}
+.ruler-label{position:absolute;bottom:22px;font-size:.7em;font-weight:700;transform:translateX(-50%)}
 @media(max-width:600px){header h1{font-size:1.6em}.topic-grid{grid-template-columns:1fr 1fr}.big-number{font-size:2em}}
 </style>
 </head>
@@ -106,17 +121,15 @@ h2{font-size:1.5em;margin-bottom:16px}
 <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
 </header>
 
-<!-- HOME SCREEN -->
 <div class="section active" id="home">
 <div class="topic-grid">
-<div class="topic-card" onclick="openLesson(1)" id="topic1"><div class="icon">🔢</div><h3>Đếm Số<br>0 đến 10</h3><p>Học đếm và viết số</p></div>
-<div class="topic-card" onclick="openLesson(2)" id="topic2"><div class="icon">⚖️</div><h3>So Sánh<br>>, <, =</h3><p>Lớn hơn, bé hơn, bằng</p></div>
-<div class="topic-card" onclick="openLesson(3)" id="topic3"><div class="icon">➕</div><h3>Phép Cộng<br>Phạm Vi 10</h3><p>Cộng hai số lại</p></div>
-<div class="topic-card" onclick="openLesson(4)" id="topic4"><div class="icon">➖</div><h3>Phép Trừ<br>Phạm Vi 10</h3><p>Bớt đi còn mấy?</p></div>
-<div class="topic-card" onclick="openLesson(5)" id="topic5"><div class="icon">🔷</div><h3>Hình Học<br>Cơ Bản</h3><p>Vuông, tròn, tam giác</p></div>
-<div class="topic-card" onclick="openLesson(6)" id="topic6"><div class="icon">🧊</div><h3>Khối Hình<br>Không Gian</h3><p>Khối lập phương, hộp chữ nhật</p></div>
-<div class="topic-card" onclick="openLesson(7)" id="topic7"><div class="icon">📐</div><h3>Vị Trí<br>Trên/Dưới, Trái/Phải</h3><p>Định hướng không gian</p></div>
-<div class="topic-card" onclick="openLesson(8)" id="topic8"><div class="icon">🏆</div><h3>Ôn Tập<br>Tổng Hợp</h3><p>Kiểm tra kiến thức</p></div>
+<div class="topic-card" onclick="openLesson(1)" id="topic1"><div class="icon">🔷</div><h3>Hình Học<br>& Vị Trí</h3><p>Hình vuông, tròn, tam giác, vị trí trên/dưới</p></div>
+<div class="topic-card" onclick="openLesson(2)" id="topic2"><div class="icon">🔢</div><h3>Các Số<br>Đến 10</h3><p>Đếm số, tách-gộp, so sánh, dấu > < =</p></div>
+<div class="topic-card" onclick="openLesson(3)" id="topic3"><div class="icon">➕</div><h3>Cộng Trừ<br>Phạm Vi 10</h3><p>Phép cộng, phép trừ, đếm thêm, đếm bớt</p></div>
+<div class="topic-card" onclick="openLesson(4)" id="topic4"><div class="icon">💯</div><h3>Các Số<br>Đến 100</h3><p>Chục, đơn vị, số có 2 chữ số, cộng trừ</p></div>
+<div class="topic-card" onclick="openLesson(5)" id="topic5"><div class="icon">🕐</div><h3>Đồng Hồ<br>& Lịch</h3><p>Xem giờ, ngày trong tuần, tờ lịch</p></div>
+<div class="topic-card" onclick="openLesson(6)" id="topic6"><div class="icon">📏</div><h3>Đo Độ Dài</h3><p>Dài hơn, ngắn hơn, xăng-ti-mét</p></div>
+<div class="topic-card" onclick="openLesson(7)" id="topic7"><div class="icon">🏆</div><h3>Ôn Tập<br>Tổng Hợp</h3><p>Kiểm tra kiến thức</p></div>
 </div>
 <div class="score-display">
 <p>Tổng điểm: <span class="score" id="totalScore">0</span></p>
@@ -124,18 +137,17 @@ h2{font-size:1.5em;margin-bottom:16px}
 </div>
 </div>
 
-<!-- LESSONS WILL BE INJECTED BY JS -->
 <div class="section" id="lesson"></div>
 
 </div>
 
 <script>
-let totalScore = 0;
-let completedLessons = new Set();
-let currentLesson = null;
-let lessonScore = 0;
-let lessonQuestions = 0;
-let lessonCorrect = 0;
+let totalScore=0;
+let completedLessons=new Set();
+let currentLesson=null;
+let lessonScore=0;
+let lessonQuestions=0;
+let lessonCorrect=0;
 
 function openLesson(n){
   currentLesson=n;lessonScore=0;lessonQuestions=0;lessonCorrect=0;
@@ -143,14 +155,13 @@ function openLesson(n){
   document.getElementById('lesson').classList.add('active');
   var l=document.getElementById('lesson');
   var inits={
-    1:[lessonCounting,initCounting],
-    2:[lessonComparison,initComparison],
-    3:[lessonAddition,initAddition],
-    4:[lessonSubtraction,initSubtraction],
-    5:[lessonShapes,initShapes],
-    6:[lesson3DShapes,init3DShapes],
-    7:[lessonPosition,initPosition],
-    8:[lessonReview,initReview]
+    1:[lessonGeometry,initGeometry],
+    2:[lessonNumbers10,initNumbers10],
+    3:[lessonAddSub10,initAddSub10],
+    4:[lessonNumbers100,initNumbers100],
+    5:[lessonClock,initClock],
+    6:[lessonLength,initLength],
+    7:[lessonReview,initReview]
   };
   var pair=inits[n];
   if(!pair)return;
@@ -158,37 +169,143 @@ function openLesson(n){
   requestAnimationFrame(function(){requestAnimationFrame(function(){pair[1]()})});
 }
 function goHome(){document.getElementById('lesson').classList.remove('active');document.getElementById('home').classList.add('active');updateProgress()}
-function updateProgress(){const p = Math.round(completedLessons.size/8*100);document.getElementById('progress').style.width=p+'%'}
+function updateProgress(){const p=Math.round(completedLessons.size/7*100);document.getElementById('progress').style.width=p+'%'}
 function markComplete(){if(currentLesson){completedLessons.add(currentLesson);const topic=document.getElementById('topic'+currentLesson);if(topic)topic.classList.add('completed')}updateProgress()}
 function addStar(){totalScore++;document.getElementById('totalScore').textContent=totalScore;const stars=['⭐','🌟🌟','🌟🌟🌟','🌟🌟🌟🌟','🌟🌟🌟🌟🌟','🌟🌟🌟🌟🌟🌟'];const si=Math.min(completedLessons.size,5);document.getElementById('totalStars').textContent=stars[si]||stars[5]}
+function updateLessonStars(id){const el=document.getElementById(id);if(el)el.textContent='⭐'.repeat(lessonCorrect)+'✨'.repeat(lessonQuestions-lessonCorrect)}
+function switchTab(tabId,initFn){document.querySelectorAll('.mode-tab').forEach(t=>t.classList.remove('active'));document.getElementById(tabId).classList.add('active');initFn()}
 
-function lessonCounting(){
+// ===== THEME 1: HÌNH HỌC & VỊ TRÍ =====
+function lessonGeometry(){
 return `<button class="back-btn" onclick="goHome()">← Về trang chính</button>
-<div class="nav-row"><h2>🔢 Đếm Số 0 Đến 10</h2><span class="emoji" id="lscore"></span></div>
-<div class="lesson-content"><p>Trong bài học này, các em sẽ <span class="highlight">học đếm</span> từ 0 đến 10. Hãy cùng tập đếm nhé!</p>
-<div class="number-row">${[0,1,2,3,4,5,6,7,8,9,10].map(n=>`<div class="num-box">${n}</div>`).join('')}</div>
-<div class="example"><strong>Cách đọc:</strong><br>0 - không &nbsp; 1 - một &nbsp; 2 - hai &nbsp; 3 - ba &nbsp; 4 - bốn &nbsp; 5 - năm<br>6 - sáu &nbsp; 7 - bảy &nbsp; 8 - tám &nbsp; 9 - chín &nbsp; 10 - mười</div></div>
-<div class="exercise-box"><div id="countEx1"></div>
-<div class="feedback" id="fb1"></div>
-<div class="action-row"><button class="btn btn-blue" onclick="newCountQ()">Câu hỏi mới 🎲</button></div></div>
+<div class="nav-row"><h2>🔷 Hình Học & Vị Trí</h2><span class="emoji" id="lscore1"></span></div>
+<div class="mode-tabs">
+<div class="mode-tab active" id="tab-shapes" onclick="switchTab('tab-shapes',initShapes)">Hình 2D</div>
+<div class="mode-tab" id="tab-3d" onclick="switchTab('tab-3d',init3DShapes)">Khối 3D</div>
+<div class="mode-tab" id="tab-position" onclick="switchTab('tab-position',initPosition)">Vị Trí</div>
+<div class="mode-tab" id="tab-arrange" onclick="switchTab('tab-arrange',initArrange)">Xếp Hình</div>
+</div>
+<div id="geoContent"></div>
 <div class="action-row"><button class="btn btn-accent" onclick="finishLesson()">Hoàn thành bài học ✅</button></div>`;
 }
+function initGeometry(){initShapes()}
 
-function initCounting(){newCountQ()}
-let countQNum=0;
-function newCountQ(){
-  if(Math.random()<0.5){newCountInputQ()}else{newCountSelectQ()}
+let shapeNames=['hình tròn','hình vuông','hình tam giác','hình chữ nhật'];
+let shapeSymbols=['●','■','▲','▬'];
+let currentShape='';
+function initShapes(){
+  const i=Math.floor(Math.random()*4);currentShape=shapeNames[i];
+  document.getElementById('geoContent').innerHTML=`
+  <div class="lesson-content"><p>Các em hãy làm quen với <span class="highlight">4 hình</span> cơ bản:</p>
+  <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;justify-content:center;margin:16px 0">
+  <div style="text-align:center"><span class="shape-box square-shape" style="width:70px;height:70px;border-radius:14px">■</span><p>Hình vuông</p></div>
+  <div style="text-align:center"><span class="shape-box circle-shape" style="width:70px;height:70px;border-radius:50%">●</span><p>Hình tròn</p></div>
+  <div style="text-align:center"><span class="triangle-shape" style="display:inline-block"></span><p>Hình tam giác</p></div>
+  <div style="text-align:center"><span class="shape-box rect-shape" style="width:70px;height:50px;border-radius:8px">▬</span><p>Hình chữ nhật</p></div>
+  </div></div>
+  <div class="exercise-box"><h3>🎯 Bài tập: Tìm hình đúng</h3><p id="shapeQ" style="font-size:1.1em;margin:12px 0"></p>
+  <div class="option-grid" id="shapeOpts"></div>
+  <div class="feedback" id="fbShape"></div></div>`;
+  newShapeQ();
 }
+function newShapeQ(){const i=Math.floor(Math.random()*4);currentShape=shapeNames[i];document.getElementById('shapeQ').textContent=`Em hãy chọn ${currentShape}:`;document.getElementById('shapeOpts').innerHTML=shapeSymbols.map((s,j)=>`<div class="option-btn" style="font-size:1.5em" onclick="checkShape(${j},this)">${s}</div>`).join('');document.getElementById('fbShape').textContent='';document.getElementById('fbShape').className='feedback'}
+function checkShape(idx,el){const correctIdx=shapeNames.indexOf(currentShape);const fb=document.getElementById('fbShape');if(idx===correctIdx){fb.textContent='⭑ Đúng rồi! Em giỏi quá!';fb.className='feedback correct';el.classList.add('correct');lessonScore++;lessonCorrect++}else{fb.textContent=`Chưa đúng. Đây là ${shapeNames[idx]}. Hãy thử lại!`;fb.className='feedback wrong';el.classList.add('wrong')}lessonQuestions++;updateLessonStars('lscore1');setTimeout(newShapeQ,1500)}
+
+let is3DCube=true;
+function init3DShapes(){
+  document.getElementById('geoContent').innerHTML=`
+  <div class="lesson-content"><p>Làm quen với hai khối hình trong không gian:</p>
+  <div style="display:flex;gap:30px;flex-wrap:wrap;align-items:center;justify-content:center;margin:16px 0">
+  <div style="text-align:center"><div style="width:60px;height:60px;background:var(--accent);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;margin:0 auto;font-size:1.5em;border:3px solid var(--accent2)">■</div><p><strong>Khối lập phương</strong></p><p style="font-size:.85em;color:var(--text2)">Ví dụ: hộp quà, xúc xắc</p></div>
+  <div style="text-align:center"><div style="width:80px;height:50px;background:var(--purple);color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;margin:0 auto;font-size:1.5em;border:3px solid #7950f2">▬</div><p><strong>Khối hộp chữ nhật</strong></p><p style="font-size:.85em;color:var(--text2)">Ví dụ: hộp bút, tủ lạnh</p></div>
+  </div></div>
+  <div class="exercise-box"><h3>🎯 Bài tập: Đoán tên khối hình</h3><div id="d3q"></div>
+  <div class="feedback" id="fb3d"></div></div>`;
+  new3DQ();
+}
+function new3DQ(){is3DCube=Math.random()>0.5;const shapeEl=is3DCube?'<div style="width:60px;height:60px;background:var(--accent);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.5em;margin:0 auto;border:3px solid var(--accent2)">■</div>':'<div style="width:80px;height:50px;background:var(--purple);color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.5em;margin:0 auto;border:3px solid #7950f2">▬</div>';document.getElementById('d3q').innerHTML=`<div style="text-align:center">${shapeEl}</div><p style="text-align:center;margin:12px 0">Đây là khối hình gì?</p><div class="option-grid">${['Khối lập phương','Khối hộp chữ nhật'].map(o=>`<div class="option-btn" onclick="check3D('${o}',this)" style="font-size:.95em">${o}</div>`).join('')}</div>`;document.getElementById('fb3d').textContent='';document.getElementById('fb3d').className='feedback'}
+function check3D(label,el){const answer=is3DCube?'Khối lập phương':'Khối hộp chữ nhật';const fb=document.getElementById('fb3d');if(label===answer){fb.textContent='⭑ Đúng rồi!';fb.className='feedback correct';el.classList.add('correct');lessonScore++;lessonCorrect++}else{fb.textContent=`Chưa đúng. Đây là ${answer}.`;fb.className='feedback wrong';el.classList.add('wrong')}lessonQuestions++;document.querySelectorAll('#d3q .option-btn').forEach(b=>b.style.pointerEvents='none');document.querySelectorAll('#d3q .option-btn').forEach(b=>{if(b.textContent===answer)b.classList.add('correct')});updateLessonStars('lscore1');setTimeout(new3DQ,1500)}
+
+let posQuestions=[
+  {q:'📺 Đồng hồ treo trên tường. Đồng hồ ở vị trí nào?',opts:['trên','dưới','trái','phải'],ans:0},
+  {q:'🧶 Thảm trải ở sàn nhà. Thảm ở vị trí nào so với bàn?',opts:['trên','dưới','trước','sau'],ans:1},
+  {q:'🧑‍🤝‍🧑 Khi xếp hàng, bạn đứng đầu hàng ở vị trí nào?',opts:['trên','dưới','trước','phải'],ans:2},
+  {q:'✏️ Em viết bằng tay nào là chủ yếu?',opts:['tay trái','tay phải','cả hai tay'],ans:1},
+  {q:'🏠 Mái nhà ở vị trí nào so với nền nhà?',opts:['trên','dưới','phải','trái'],ans:0},
+  {q:'🎒 Cặp sách em để sau lưng. Cặp sách ở vị trí nào?',opts:['trước','sau','trên','dưới'],ans:1},
+  {q:'🐱 Con mèo nằm giữa chó và thỏ. Con mèo ở vị trí nào?',opts:['trên','dưới','ở giữa','sau'],ans:2}
+];
+let posIdx=0;
+function initPosition(){
+  document.getElementById('geoContent').innerHTML=`
+  <div class="lesson-content"><p>Học về <span class="highlight">vị trí</span> của đồ vật trong không gian:</p>
+  <div class="example"><strong>Trên — Dưới:</strong> Quyển sách <span class="highlight">ở trên</span> bàn, dép <span class="highlight">ở dưới</span> bàn.<br><strong>Trước — Sau:</strong> Bạn A <span class="highlight">ở trước</span> bạn B, bạn B <span class="highlight">ở sau</span> bạn A.<br><strong>Phải — Trái:</strong> Tay <span class="highlight">phải</span> cầm bút, tay <span class="highlight">trái</span> giữ vở.<br><strong>Ở giữa:</strong> Bạn C ngồi <span class="highlight">ở giữa</span> bạn A và bạn B.</div></div>
+  <div class="exercise-box"><h3>🎯 Bài tập: Chọn vị trí đúng</h3><div id="posQ"></div>
+  <div class="feedback" id="fbPos"></div></div>`;
+  posIdx=0;newPosQ();
+}
+function newPosQ(){posIdx=Math.floor(Math.random()*posQuestions.length);const pq=posQuestions[posIdx];document.getElementById('posQ').innerHTML=`<p style="text-align:center;font-size:1.15em;margin:12px 0">${pq.q}</p><div class="option-grid">${pq.opts.map((o,i)=>`<div class="option-btn" onclick="checkPos(${i},this)">${o}</div>`).join('')}</div>`;document.getElementById('fbPos').textContent='';document.getElementById('fbPos').className='feedback'}
+function checkPos(idx,el){const pq=posQuestions[posIdx];const fb=document.getElementById('fbPos');if(idx===pq.ans){fb.textContent='⭑ Đúng! Em rất giỏi!';fb.className='feedback correct';el.classList.add('correct');lessonScore++;lessonCorrect++}else{fb.textContent=`Chưa đúng. Đáp án là "${pq.opts[pq.ans]}".`;fb.className='feedback wrong';el.classList.add('wrong')}lessonQuestions++;document.querySelectorAll('#posQ .option-btn').forEach(b=>b.style.pointerEvents='none');document.querySelectorAll('#posQ .option-btn').forEach((b,i)=>{if(i===pq.ans)b.classList.add('correct')});updateLessonStars('lscore1');setTimeout(newPosQ,1800)}
+
+let arrangePattern=[];
+function initArrange(){
+  document.getElementById('geoContent').innerHTML=`
+  <div class="lesson-content"><p>Học về <span class="highlight">cách sắp xếp</span> hình theo quy luật. Nhìn kỹ và tìm hình tiếp theo nhé!</p>
+  <div class="example"><strong>Ví dụ:</strong> 🔴 🔵 🔴 🔵 🔴 <span class="highlight">❓</span><br>Hình tiếp theo là <strong>🔵</strong> (xen kẽ đỏ - xanh!)</div></div>
+  <div class="exercise-box"><h3>🎯 Bài tập: Tìm hình tiếp theo</h3><div id="arrangeQ"></div>
+  <div class="feedback" id="fbArrange"></div></div>`;
+  newArrangeQ();
+}
+function newArrangeQ(){
+  const patterns=[
+    {seq:['🔴','🔵','🔴','🔵','🔴'],next:'🔵',opts:['🔴','🔵','🟢','🟡'],ans:1},
+    {seq:['🟡','🟡','🔴','🟡','🟡'],next:'🔴',opts:['🟡','🔴','🔵','🟢'],ans:1},
+    {seq:['■','●','■','●','■'],next:'●',opts:['■','●','▲','▬'],ans:1},
+    {seq:['🔺','🔻','🔺','🔻','🔺'],next:'🔻',opts:['🔺','🔻','⬛','⬜'],ans:1},
+    {seq:['⭐','🌙','⭐','🌙','⭐'],next:'🌙',opts:['⭐','🌙','☀️','🌟'],ans:1},
+    {seq:['🍎','🍎','🍊','🍎','🍎'],next:'🍊',opts:['🍎','🍊','🍋','🍇'],ans:1}
+  ];
+  const p=patterns[Math.floor(Math.random()*patterns.length)];
+  document.getElementById('arrangeQ').innerHTML=`<p style="text-align:center;font-size:1.3em;margin:12px 0">${p.seq.join(' ')} <span class="highlight">❓</span></p><p style="text-align:center;color:var(--text2);margin-bottom:12px">Hình tiếp theo là gì?</p><div class="option-grid">${p.opts.map((o,i)=>`<div class="option-btn" style="font-size:1.5em" onclick="checkArrange(${i},${p.ans},this)">${o}</div>`).join('')}</div>`;
+  document.getElementById('fbArrange').textContent='';document.getElementById('fbArrange').className='feedback';
+}
+function checkArrange(idx,ans,el){const fb=document.getElementById('fbArrange');if(idx===ans){fb.textContent='⭑ Đúng! Em rất giỏi!';fb.className='feedback correct';el.classList.add('correct');lessonScore++;lessonCorrect++}else{fb.textContent='Chưa đúng. Hãy nhìn kỹ quy luật nhé!';fb.className='feedback wrong';el.classList.add('wrong')}lessonQuestions++;document.querySelectorAll('#arrangeQ .option-btn').forEach(b=>b.style.pointerEvents='none');document.querySelectorAll('#arrangeQ .option-btn').forEach((b,i)=>{if(i===ans)b.classList.add('correct')});updateLessonStars('lscore1');setTimeout(newArrangeQ,1500)}
+
+// ===== THEME 2: CÁC SỐ ĐẾN 10 =====
+function lessonNumbers10(){
+return `<button class="back-btn" onclick="goHome()">← Về trang chính</button>
+<div class="nav-row"><h2>🔢 Các Số Đến 10</h2><span class="emoji" id="lscore2"></span></div>
+<div class="mode-tabs">
+<div class="mode-tab active" id="tab-count" onclick="switchTab('tab-count',initCounting)">Đếm Số</div>
+<div class="mode-tab" id="tab-split" onclick="switchTab('tab-split',initSplit)">Tách - Gộp</div>
+<div class="mode-tab" id="tab-compare" onclick="switchTab('tab-compare',initComparison)">So Sánh</div>
+</div>
+<div id="num10Content"></div>
+<div class="action-row"><button class="btn btn-accent" onclick="finishLesson()">Hoàn thành bài học ✅</button></div>`;
+}
+function initNumbers10(){initCounting()}
+
+let countQNum=0;
+function initCounting(){
+  document.getElementById('num10Content').innerHTML=`
+  <div class="lesson-content"><p>Trong bài học này, các em sẽ <span class="highlight">học đếm</span> từ 0 đến 10. Hãy cùng tập đếm nhé!</p>
+  <div class="number-row">${[0,1,2,3,4,5,6,7,8,9,10].map(n=>`<div class="num-box">${n}</div>`).join('')}</div>
+  <div class="example"><strong>Cách đọc:</strong><br>0 - không &nbsp; 1 - một &nbsp; 2 - hai &nbsp; 3 - ba &nbsp; 4 - bốn &nbsp; 5 - năm<br>6 - sáu &nbsp; 7 - bảy &nbsp; 8 - tám &nbsp; 9 - chín &nbsp; 10 - mười</div></div>
+  <div class="exercise-box"><div id="countEx"></div>
+  <div class="feedback" id="fbCount"></div>
+  <div class="action-row"><button class="btn btn-blue" onclick="newCountQ()">Câu hỏi mới 🎲</button></div></div>`;
+  newCountQ();
+}
+function newCountQ(){if(Math.random()<0.5){newCountInputQ()}else{newCountSelectQ()}}
 function newCountInputQ(){
   countQNum=Math.floor(Math.random()*10)+1;
   const emojis=['🐘','🦁','🐰','🐸','🐶','🐱','🐔','🐟','🦋','🌻','🍎','🍓'];
   const em=emojis[Math.floor(Math.random()*emojis.length)];
   var items=[];for(let i=0;i<countQNum;i++)items.push(`<span class="count-item">${em}</span>`);
-  document.getElementById('countEx1').innerHTML=`<h3>Đếm đồ vật ✏️</h3><p style="text-align:center;font-size:1.3em">Có mấy ${em}?</p><div class="count-area">${items.join('')}</div><div class="input-row"><input class="math-input" id="countInput" type="number" min="0" max="10" placeholder="?" onkeyup="if(event.key==='Enter')checkCount()"><button class="btn btn-green" onclick="checkCount()">Kiểm tra ✓</button></div>`;
-  document.getElementById('fb1').textContent='';document.getElementById('fb1').className='feedback'
+  document.getElementById('countEx').innerHTML=`<h3>Đếm đồ vật ✏️</h3><p style="text-align:center;font-size:1.3em">Có mấy ${em}?</p><div class="count-area">${items.join('')}</div><div class="input-row"><input class="math-input" id="countInput" type="number" min="0" max="10" placeholder="?" onkeyup="if(event.key==='Enter')checkCount()"><button class="btn btn-green" onclick="checkCount()">Kiểm tra ✓</button></div>`;
+  document.getElementById('fbCount').textContent='';document.getElementById('fbCount').className='feedback';
 }
-function checkCount(){const val=parseInt(document.getElementById('countInput').value);const fb=document.getElementById('fb1');const inp=document.getElementById('countInput');if(val===countQNum){fb.textContent='⭑ Đúng rồi! Giỏi quá!';fb.className='feedback correct';inp.className='math-input correct';lessonScore++;lessonCorrect++}else{fb.textContent=`Sai rồi. Có ${countQNum} đồ vật. Thử lại nhé!`;fb.className='feedback wrong';inp.className='math-input wrong'}lessonQuestions++;updateLessonScore()}
-
+function checkCount(){const val=parseInt(document.getElementById('countInput').value);const fb=document.getElementById('fbCount');const inp=document.getElementById('countInput');if(val===countQNum){fb.textContent='⭑ Đúng rồi! Giỏi quá!';fb.className='feedback correct';inp.className='math-input correct';lessonScore++;lessonCorrect++}else{fb.textContent=`Sai rồi. Có ${countQNum} đồ vật. Thử lại nhé!`;fb.className='feedback wrong';inp.className='math-input wrong'}lessonQuestions++;updateLessonStars('lscore2')}
 let selectQNum=0;
 function newCountSelectQ(){
   selectQNum=Math.floor(Math.random()*10)+1;
@@ -197,193 +314,499 @@ function newCountSelectQ(){
   var items=[];for(let i=0;i<selectQNum;i++)items.push(`<span class="count-item">${em}</span>`);
   const correct=selectQNum;
   const opts=[correct];while(opts.length<4){const x=Math.floor(Math.random()*11);if(!opts.includes(x))opts.push(x)}opts.sort(()=>Math.random()-.5);
-  document.getElementById('countEx1').innerHTML=`<h3>Chọn số đúng 🔢</h3><p style="text-align:center;font-size:1.2em">Có mấy ${em}?</p><div class="count-area">${items.join('')}</div><div class="option-grid">${opts.map(o=>`<div class="option-btn" onclick="checkSelectQ(${o},this)">${o}</div>`).join('')}</div>`;
-  document.getElementById('fb1').textContent='';document.getElementById('fb1').className='feedback'
+  document.getElementById('countEx').innerHTML=`<h3>Chọn số đúng 🔢</h3><p style="text-align:center;font-size:1.2em">Có mấy ${em}?</p><div class="count-area">${items.join('')}</div><div class="option-grid">${opts.map(o=>`<div class="option-btn" onclick="checkSelectQ(${o},this)">${o}</div>`).join('')}</div>`;
+  document.getElementById('fbCount').textContent='';document.getElementById('fbCount').className='feedback';
 }
-function checkSelectQ(val,el){
-  const fb=document.getElementById('fb1');document.querySelectorAll('#countEx1 .option-btn').forEach(b=>b.style.pointerEvents='none');
-  if(val===selectQNum){fb.textContent='⭑ Chính xác!';fb.className='feedback correct';el.classList.add('correct');lessonScore++;lessonCorrect++}else{fb.textContent=`Không đúng. Đáp án là ${selectQNum}.`;fb.className='feedback wrong';el.classList.add('wrong');document.querySelectorAll('#countEx1 .option-btn').forEach(b=>{if(parseInt(b.textContent)===selectQNum)b.classList.add('correct')})}lessonQuestions++;updateLessonScore();setTimeout(newCountQ,1800)
-}
-function updateLessonScore(){document.getElementById('lscore').textContent='✅'.repeat(lessonCorrect)+'❌'.repeat(lessonQuestions-lessonCorrect)}
+function checkSelectQ(val,el){const fb=document.getElementById('fbCount');document.querySelectorAll('#countEx .option-btn').forEach(b=>b.style.pointerEvents='none');if(val===selectQNum){fb.textContent='⭑ Chính xác!';fb.className='feedback correct';el.classList.add('correct');lessonScore++;lessonCorrect++}else{fb.textContent=`Không đúng. Đáp án là ${selectQNum}.`;fb.className='feedback wrong';el.classList.add('wrong');document.querySelectorAll('#countEx .option-btn').forEach(b=>{if(parseInt(b.textContent)===selectQNum)b.classList.add('correct')})}lessonQuestions++;updateLessonStars('lscore2');setTimeout(newCountQ,1800)}
 
-function lessonComparison(){
-return `<button class="back-btn" onclick="goHome()">← Về trang chính</button>
-<div class="nav-row"><h2>⚖️ So Sánh: >, <, =</h2><span class="emoji" id="lscore2"></span></div>
-<div class="lesson-content"><p>Hôm nay chúng ta học <span class="highlight">so sánh</span>! Tưởng tượng con cá sấu tham ăn — nó luôn <span class="highlight">há miệng về phía số lớn hơn</span>!</p>
-<div class="example" style="text-align:center">
-<div style="font-size:2em">🐊</div>
-<p style="margin:4px 0"><strong>Miệng cá sấu luôn quay về số lớn hơn!</strong></p>
-<div class="compare-cards">
-<div class="compare-card"><div class="n">5</div><div class="count-area" style="flex-wrap:wrap">🦁🦁🦁🦁🦁</div></div>
-<div style="font-size:1.5em">＞</div>
-<div class="compare-card"><div class="n">3</div><div class="count-area" style="flex-wrap:wrap">🦁🦁🦁</div></div>
-</div>
-<p style="margin-top:8px">5 con sư tử <span class="highlight">nhiều hơn</span> 3 con → <strong>5 > 3</strong> <em>(dấu lớn hơn mở về phía số lớn!)</em></p>
-</div></div>
-<div class="exercise-box"><div id="compQ1"></div>
-<div class="feedback" id="fbComp"></div>
-<div class="action-row"><button class="btn btn-blue" onclick="newCompQ()">Câu hỏi mới 🎲</button></div></div>
-<div class="action-row"><button class="btn btn-accent" onclick="finishLesson()">Hoàn thành bài học ✅</button></div>`;
+let splitData={total:0,parts:[]};
+function initSplit(){
+  document.getElementById('num10Content').innerHTML=`
+  <div class="lesson-content"><p>Học về <span class="highlight">tách số</span> và <span class="highlight">gộp số</span>! Một số có thể tách thành hai phần nhỏ, và hai phần nhỏ có thể gộp lại thành số lớn.</p>
+  <div class="example"><strong>Tách số:</strong> 5 = 2 + 3 (5 tách thành 2 và 3)<br><strong>Gộp số:</strong> 2 + 3 = 5 (2 và 3 gộp thành 5)</div></div>
+  <div class="exercise-box"><div id="splitEx"></div>
+  <div class="feedback" id="fbSplit"></div>
+  <div class="action-row"><button class="btn btn-blue" onclick="newSplitQ()">Câu hỏi mới 🎲</button></div></div>`;
+  newSplitQ();
 }
-
-function initComparison(){newCompQ()}
-
-let compData={a:0,b:0,mode:0};
-function newCompQ(){
-  if(Math.random()<0.5){newCompVisualQ()}else{newCompNumberQ()}
+function newSplitQ(){
+  if(Math.random()<0.5){newSplitQ1()}else{newCombineQ()}
 }
+function newSplitQ1(){
+  splitData.total=Math.floor(Math.random()*8)+2;
+  splitData.parts=[Math.floor(Math.random()*(splitData.total-1))+1,0];
+  splitData.parts[1]=splitData.total-splitData.parts[0];
+  const hidden=Math.random()>0.5?0:1;
+  const em=['🍎','🐘','⭐','🌸','🐟','🦋'];
+  const e=em[Math.floor(Math.random()*em.length)];
+  var itemsA=[],itemsB=[];
+  for(let i=0;i<splitData.parts[0];i++)itemsA.push(`<span class="count-item">${e}</span>`);
+  for(let i=0;i<splitData.parts[1];i++)itemsB.push(`<span class="count-item">${e}</span>`);
+  document.getElementById('splitEx').innerHTML=`<h3>Tách số ✂️</h3><p style="text-align:center;font-size:1.2em;margin:12px 0">${splitData.total} ${e} tách thành hai nhóm:</p><div class="count-area">${itemsA.join('')}<span style="font-size:1.5em;padding:0 10px">|</span>${itemsB.join('')}</div><div style="text-align:center;font-size:1.5em;margin:12px 0">${splitData.total} = ${splitData.parts[0]} + <input class="math-input" id="splitInput" type="number" min="0" max="10" placeholder="?" onkeyup="if(event.key==='Enter')checkSplit()"></div><button class="btn btn-green" onclick="checkSplit()" style="display:block;margin:12px auto">Kiểm tra ✓</button>`;
+  document.getElementById('fbSplit').textContent='';document.getElementById('fbSplit').className='feedback';
+  window._splitAnswer=splitData.parts[1];
+}
+function newCombineQ(){
+  const a=Math.floor(Math.random()*5)+1;const b=Math.floor(Math.random()*5)+1;
+  const em=['🍎','🐘','⭐','🌸','🐟','🦋'];
+  const e=em[Math.floor(Math.random()*em.length)];
+  var itemsA=[],itemsB=[];
+  for(let i=0;i<a;i++)itemsA.push(`<span class="count-item">${e}</span>`);
+  for(let i=0;i<b;i++)itemsB.push(`<span class="count-item">+${e}</span>`);
+  document.getElementById('splitEx').innerHTML=`<h3>Gộp số 🤝</h3><p style="text-align:center;font-size:1.2em;margin:12px 0">Gộp hai nhóm lại:</p><div class="count-area">${itemsA.join('')}${itemsB.join('')}</div><div style="text-align:center;font-size:1.5em;margin:12px 0">${a} + ${b} = <input class="math-input" id="splitInput" type="number" min="0" max="10" placeholder="?" onkeyup="if(event.key==='Enter')checkSplit()"></div><button class="btn btn-green" onclick="checkSplit()" style="display:block;margin:12px auto">Kiểm tra ✓</button>`;
+  document.getElementById('fbSplit').textContent='';document.getElementById('fbSplit').className='feedback';
+  window._splitAnswer=a+b;
+}
+function checkSplit(){const val=parseInt(document.getElementById('splitInput').value);const fb=document.getElementById('fbSplit');const inp=document.getElementById('splitInput');if(val===window._splitAnswer){fb.textContent='⭑ Đúng rồi! Giỏi quá!';fb.className='feedback correct';inp.className='math-input correct';lessonScore++;lessonCorrect++}else{fb.textContent=`Chưa đúng. Đáp án là ${window._splitAnswer}.`;fb.className='feedback wrong';inp.className='math-input wrong'}lessonQuestions++;updateLessonStars('lscore2');setTimeout(newSplitQ,1800)}
+
+let compData={a:0,b:0};
+function initComparison(){
+  document.getElementById('num10Content').innerHTML=`
+  <div class="lesson-content"><p>Hôm nay chúng ta học <span class="highlight">so sánh</span>! Tưởng tượng con cá sấu tham ăn — nó luôn <span class="highlight">há miệng về phía số lớn hơn</span>!</p>
+  <div class="example" style="text-align:center">
+  <div style="font-size:2em">🐊</div>
+  <p style="margin:4px 0"><strong>Miệng cá sấu luôn quay về số lớn hơn!</strong></p>
+  <div class="compare-cards">
+  <div class="compare-card"><div class="n">5</div><div class="count-area" style="flex-wrap:wrap">🦁🦁🦁🦁🦁</div></div>
+  <div style="font-size:1.5em">＞</div>
+  <div class="compare-card"><div class="n">3</div><div class="count-area" style="flex-wrap:wrap">🦁🦁🦁</div></div>
+  </div>
+  <p style="margin-top:8px">5 con sư tử <span class="highlight">nhiều hơn</span> 3 con → <strong>5 > 3</strong></p></div></div>
+  <div class="exercise-box"><div id="compQ"></div>
+  <div class="feedback" id="fbComp"></div>
+  <div class="action-row"><button class="btn btn-blue" onclick="newCompQ()">Câu hỏi mới 🎲</button></div></div>`;
+  newCompQ();
+}
+function newCompQ(){if(Math.random()<0.5){newCompVisualQ()}else{newCompNumberQ()}}
 function newCompVisualQ(){
-  compData.a=Math.floor(Math.random()*5)+1;compData.b=Math.floor(Math.random()*5)+1;compData.mode=0;
+  compData.a=Math.floor(Math.random()*8)+1;compData.b=Math.floor(Math.random()*8)+1;
   const ems=['🐧','🐰','🐸','🐶','🐱','🍎','⭐','🌸','🐟','🦋'];
   const e=ems[Math.floor(Math.random()*ems.length)];
   var ra=[],rb=[];
   for(let i=0;i<compData.a;i++)ra.push(`<span class="count-item">${e}</span>`);
   for(let i=0;i<compData.b;i++)rb.push(`<span class="count-item">${e}</span>`);
-  const opts=[{text:'Bên trái nhiều hơn',value:'>'},
-              {text:'Bên phải nhiều hơn',value:'<'},
-              {text:'Hai bên bằng nhau',value:'='}];
-  document.getElementById('compQ1').innerHTML=`<h3>So sánh hình ảnh 🖼️</h3><p style="text-align:center;color:var(--text2);margin-bottom:12px">Đếm số lượng đồ vật. Bên nào nhiều hơn?</p><div class="compare-cards"><div class="compare-card"><div class="count-area" style="flex-wrap:wrap;justify-content:center;min-width:80px">${ra.join('')}</div><p style="margin-top:6px;font-weight:700">Bên trái</p></div><div style="font-size:1.5em">❓</div><div class="compare-card"><div class="count-area" style="flex-wrap:wrap;justify-content:center;min-width:80px">${rb.join('')}</div><p style="margin-top:6px;font-weight:700">Bên phải</p></div></div><div class="option-grid">${opts.map(o=>`<div class="option-btn" style="font-size:.85em;min-width:140px" onclick="checkComp('${o.value}',this)">${o.text}</div>`).join('')}</div>`;
+  const opts=[{text:'Bên trái nhiều hơn',value:'>'},{text:'Bên phải nhiều hơn',value:'<'},{text:'Hai bên bằng nhau',value:'='}];
+  document.getElementById('compQ').innerHTML=`<h3>So sánh hình ảnh 🖼️</h3><p style="text-align:center;color:var(--text2);margin-bottom:12px">Đếm số lượng đồ vật. Bên nào nhiều hơn?</p><div class="compare-cards"><div class="compare-card"><div class="count-area" style="flex-wrap:wrap;justify-content:center;min-width:80px">${ra.join('')}</div><p style="margin-top:6px;font-weight:700">Bên trái</p></div><div style="font-size:1.5em">❓</div><div class="compare-card"><div class="count-area" style="flex-wrap:wrap;justify-content:center;min-width:80px">${rb.join('')}</div><p style="margin-top:6px;font-weight:700">Bên phải</p></div></div><div class="option-grid">${opts.map(o=>`<div class="option-btn" style="font-size:.85em;min-width:140px" onclick="checkComp('${o.value}',this)">${o.text}</div>`).join('')}</div>`;
+  document.getElementById('fbComp').textContent='';document.getElementById('fbComp').className='feedback';
 }
 function newCompNumberQ(){
-  compData.a=Math.floor(Math.random()*10);compData.b=Math.floor(Math.random()*10);compData.mode=1;
-  document.getElementById('compQ1').innerHTML=`<h3>So sánh bằng số 🔢</h3><p style="text-align:center;color:var(--text2);margin-bottom:12px">Chọn dấu đúng. Gợi ý: miệng dấu mở về phía số lớn hơn! (ví dụ 7 <strong>></strong> 3)</p><div class="compare-cards"><div class="compare-card" style="min-width:80px"><div class="n" style="font-size:3em">${compData.a}</div></div><div style="font-size:1.5em">❓</div><div class="compare-card" style="min-width:80px"><div class="n" style="font-size:3em">${compData.b}</div></div></div><p style="text-align:center;font-size:1.3em;margin:12px 0">${compData.a} <span class="highlight">?</span> ${compData.b}</p><div class="option-grid">${['>','<','='].map(s=>`<div class="option-btn" style="font-size:1.5em" onclick="checkComp('${s}',this)">${s}</div>`).join('')}</div>`;
-  document.getElementById('fbComp').textContent='';document.getElementById('fbComp').className='feedback'
+  compData.a=Math.floor(Math.random()*10);compData.b=Math.floor(Math.random()*10);
+  document.getElementById('compQ').innerHTML=`<h3>So sánh bằng số 🔢</h3><p style="text-align:center;color:var(--text2);margin-bottom:12px">Chọn dấu đúng. Gợi ý: miệng cá sấu há về số lớn hơn!</p><div class="compare-cards"><div class="compare-card" style="min-width:80px"><div class="n" style="font-size:3em">${compData.a}</div></div><div style="font-size:2em;animation:float 2s ease-in-out infinite">🐊</div><div class="compare-card" style="min-width:80px"><div class="n" style="font-size:3em">${compData.b}</div></div></div><p style="text-align:center;font-size:1.3em;margin:12px 0">${compData.a} <span class="highlight">?</span> ${compData.b}</p><div class="option-grid">${['>','<','='].map(s=>`<div class="option-btn" style="font-size:1.5em" onclick="checkComp('${s}',this)">${s}</div>`).join('')}</div>`;
+  document.getElementById('fbComp').textContent='';document.getElementById('fbComp').className='feedback';
 }
-function newCompNumberQ(){
-  compData.a=Math.floor(Math.random()*10);compData.b=Math.floor(Math.random()*10);compData.mode=1;
-  document.getElementById('compQ1').innerHTML=`<h3>So sánh bằng số 🔢</h3><p style="text-align:center;color:var(--text2);margin-bottom:12px">Không có hình ảnh, chỉ có số. Nhớ: cá sấu há miệng về số lớn hơn!</p><div class="compare-cards"><div class="compare-card" style="min-width:80px"><div class="n" style="font-size:3em">${compData.a}</div></div><div style="font-size:2em;animation:float 2s ease-in-out infinite">🐊</div><div class="compare-card" style="min-width:80px"><div class="n" style="font-size:3em">${compData.b}</div></div></div><p style="text-align:center;font-size:1.3em;margin:12px 0">${compData.a} <span class="highlight">?</span> ${compData.b}</p><div class="option-grid">${['>','<','='].map(s=>`<div class="option-btn" style="font-size:1.5em" onclick="checkComp('${s}',this)">${s}</div>`).join('')}</div>`;
-  document.getElementById('fbComp').textContent='';document.getElementById('fbComp').className='feedback'
-}
-function checkComp(sign,el){
-  var a=compData.a,b=compData.b,correctSign=a>b?'>':a<b?'<':'=';
-  var word=a>b?'lớn hơn':a<b?'bé hơn':'bằng';
-  const fb=document.getElementById('fbComp');
-  document.querySelectorAll('#compQ1 .option-btn').forEach(b=>b.style.pointerEvents='none');
-  if(sign===correctSign){
-    fb.textContent='⭑ Đúng! '+a+' '+correctSign+' '+b+' ('+a+' '+word+' '+b+')';
-    fb.className='feedback correct';el.classList.add('correct');lessonScore++;lessonCorrect++
-  }else{
-    fb.textContent='Chưa đúng. '+a+' '+word+' '+b+'. Dấu đúng là: '+correctSign;
-    fb.className='feedback wrong';el.classList.add('wrong')
-  }
-  lessonQuestions++;document.querySelectorAll('#compQ1 .option-btn').forEach(b=>{if(b.textContent===correctSign)b.classList.add('correct')});
-  updateLessonScoreComp();setTimeout(newCompQ,2000)
-}
+function checkComp(sign,el){var a=compData.a,b=compData.b,correctSign=a>b?'>':a<b?'<':'=';var word=a>b?'lớn hơn':a<b?'bé hơn':'bằng';const fb=document.getElementById('fbComp');document.querySelectorAll('#compQ .option-btn').forEach(b=>b.style.pointerEvents='none');if(sign===correctSign){fb.textContent='⭑ Đúng! '+a+' '+correctSign+' '+b+' ('+a+' '+word+' '+b+')';fb.className='feedback correct';el.classList.add('correct');lessonScore++;lessonCorrect++}else{fb.textContent='Chưa đúng. '+a+' '+word+' '+b+'. Dấu đúng là: '+correctSign;fb.className='feedback wrong';el.classList.add('wrong')}lessonQuestions++;document.querySelectorAll('#compQ .option-btn').forEach(b=>{if(b.textContent===correctSign)b.classList.add('correct')});updateLessonStars('lscore2');setTimeout(newCompQ,2000)}
 
-function lessonAddition(){
+// ===== THEME 3: CỘNG TRỪ PHẠM VI 10 =====
+function lessonAddSub10(){
 return `<button class="back-btn" onclick="goHome()">← Về trang chính</button>
-<div class="nav-row"><h2>➕ Phép Cộng Trong Phạm Vi 10</h2><span class="emoji" id="lscore3"></span></div>
-<div class="lesson-content"><p>Phép cộng là <span class="highlight">gộp</span> hai nhóm lại với nhau. Dấu cộng là dấu <strong>+</strong>.</p>
-<div class="example">Ví dụ: Có 3 quả 🍎 và 2 quả 🍎. Gộp lại được <span class="highlight">5</span> quả.<br><strong>3 + 2 = 5</strong> (Ba cộng hai bằng năm)</div></div>
-<div class="exercise-box"><h3>Bài tập: Tính phép cộng</h3><div id="addQ"></div>
-<div class="feedback" id="fbAdd"></div>
-<div class="action-row"><button class="btn btn-blue" onclick="newAddQ()">Câu mới 🎲</button></div></div>
+<div class="nav-row"><h2>➕➖ Cộng Trừ Phạm Vi 10</h2><span class="emoji" id="lscore3"></span></div>
+<div class="mode-tabs">
+<div class="mode-tab active" id="tab-add" onclick="switchTab('tab-add',initAddition)">Phép Cộng</div>
+<div class="mode-tab" id="tab-sub" onclick="switchTab('tab-sub',initSubtraction)">Phép Trừ</div>
+<div class="mode-tab" id="tab-countfwd" onclick="switchTab('tab-countfwd',initCountFwd)">Đếm Thêm</div>
+<div class="mode-tab" id="tab-countback" onclick="switchTab('tab-countback',initCountBack)">Đếm Bớt</div>
+</div>
+<div id="addsubContent"></div>
 <div class="action-row"><button class="btn btn-accent" onclick="finishLesson()">Hoàn thành bài học ✅</button></div>`;
 }
+function initAddSub10(){initAddition()}
 
 let addA=0,addB=0;
-function initAddition(){newAddQ()}
-function newAddQ(){addA=Math.floor(Math.random()*6);addB=Math.floor(Math.random()*(10-addA+1));const itemsA=[],itemsB=[];const em=['🐘','🐰','🐸','🐶','🐱','🍎','⭐','🌸','🐟','🚗'];const e=em[Math.floor(Math.random()*em.length)];for(let i=0;i<addA;i++)itemsA.push(`<span class="count-item">${e}</span>`);for(let i=0;i<addB;i++)itemsB.push(`<span class="count-item">+${e}</span>`);document.getElementById('addQ').innerHTML=`<div style="text-align:center"><div class="count-area">${itemsA.join('')}${itemsB.join('')}</div><div style="font-size:1.5em;margin:12px 0">${addA} + ${addB} = <input class="math-input" id="addInput" type="number" min="0" max="10" placeholder="?" onkeyup="if(event.key==='Enter')checkAdd()"></div><button class="btn btn-green" onclick="checkAdd()">Kiểm tra ✓</button></div>`;document.getElementById('fbAdd').textContent='';document.getElementById('fbAdd').className='feedback'}
-function checkAdd(){const val=parseInt(document.getElementById('addInput').value);const correct=addA+addB;const fb=document.getElementById('fbAdd');const inp=document.getElementById('addInput');if(val===correct){fb.textContent=`⭑ Đúng! ${addA} + ${addB} = ${correct}`;fb.className='feedback correct';inp.className='math-input correct';lessonScore++;lessonCorrect++}else{fb.textContent=`Chưa đúng. ${addA} + ${addB} = ${correct}`;fb.className='feedback wrong';inp.className='math-input wrong'}lessonQuestions++;document.getElementById('addInput').disabled=true;updateLessonScore3();setTimeout(newAddQ,1800)}
-function updateLessonScore3(){document.getElementById('lscore3').textContent='✅'.repeat(lessonCorrect)+'❌'.repeat(lessonQuestions-lessonCorrect)}
-
-function lessonSubtraction(){
-return `<button class="back-btn" onclick="goHome()">← Về trang chính</button>
-<div class="nav-row"><h2>➖ Phép Trừ Trong Phạm Vi 10</h2><span class="emoji" id="lscore4"></span></div>
-<div class="lesson-content"><p>Phép trừ là <span class="highlight">bớt đi</span> một số lượng. Dấu trừ là dấu <strong>−</strong>.</p>
-<div class="example">Ví dụ: Có 6 quả 🍎, ăn mất 2 quả. Còn lại <span class="highlight">4</span> quả.<br><strong>6 − 2 = 4</strong> (Sáu trừ hai bằng bốn)</div></div>
-<div class="exercise-box"><h3>Bài tập: Tính phép trừ</h3><div id="subQ"></div>
-<div class="feedback" id="fbSub"></div>
-<div class="action-row"><button class="btn btn-blue" onclick="newSubQ()">Câu mới 🎲</button></div></div>
-<div class="action-row"><button class="btn btn-accent" onclick="finishLesson()">Hoàn thành bài học ✅</button></div>`;
+function initAddition(){
+  document.getElementById('addsubContent').innerHTML=`
+  <div class="lesson-content"><p>Phép cộng là <span class="highlight">gộp</span> hai nhóm lại với nhau. Dấu cộng là dấu <strong>+</strong>.</p>
+  <div class="example">Ví dụ: Có 3 quả 🍎 và 2 quả 🍎. Gộp lại được <span class="highlight">5</span> quả.<br><strong>3 + 2 = 5</strong> (Ba cộng hai bằng năm)</div></div>
+  <div class="exercise-box"><h3>🎯 Bài tập: Tính phép cộng</h3><div id="addQ"></div>
+  <div class="feedback" id="fbAdd"></div>
+  <div class="action-row"><button class="btn btn-blue" onclick="newAddQ()">Câu mới 🎲</button></div></div>`;
+  newAddQ();
 }
+function newAddQ(){addA=Math.floor(Math.random()*6);addB=Math.floor(Math.random()*(10-addA+1));const itemsA=[],itemsB=[];const em=['🐘','🐰','🐸','🐶','🐱','🍎','⭐','🌸','🐟','🚗'];const e=em[Math.floor(Math.random()*em.length)];for(let i=0;i<addA;i++)itemsA.push(`<span class="count-item">${e}</span>`);for(let i=0;i<addB;i++)itemsB.push(`<span class="count-item">+${e}</span>`);document.getElementById('addQ').innerHTML=`<div style="text-align:center"><div class="count-area">${itemsA.join('')}${itemsB.join('')}</div><div style="font-size:1.5em;margin:12px 0">${addA} + ${addB} = <input class="math-input" id="addInput" type="number" min="0" max="10" placeholder="?" onkeyup="if(event.key==='Enter')checkAdd()"></div><button class="btn btn-green" onclick="checkAdd()" style="display:block;margin:12px auto">Kiểm tra ✓</button></div>`;document.getElementById('fbAdd').textContent='';document.getElementById('fbAdd').className='feedback'}
+function checkAdd(){const val=parseInt(document.getElementById('addInput').value);const correct=addA+addB;const fb=document.getElementById('fbAdd');const inp=document.getElementById('addInput');if(val===correct){fb.textContent=`⭑ Đúng! ${addA} + ${addB} = ${correct}`;fb.className='feedback correct';inp.className='math-input correct';lessonScore++;lessonCorrect++}else{fb.textContent=`Chưa đúng. ${addA} + ${addB} = ${correct}`;fb.className='feedback wrong';inp.className='math-input wrong'}lessonQuestions++;updateLessonStars('lscore3');setTimeout(newAddQ,1800)}
 
 let subA=0,subB=0;
-function initSubtraction(){newSubQ()}
-function newSubQ(){subA=Math.floor(Math.random()*10)+1;subB=Math.floor(Math.random()*(subA+1));const items=[];const e='🍎';for(let i=0;i<subA;i++)items.push(`<span class="count-item">${e}</span>`);document.getElementById('subQ').innerHTML=`<div style="text-align:center"><p>Có ${subA} quả ${e}, bớt đi ${subB} quả. Còn mấy quả?</p><div class="count-area">${items.join('')}</div><div style="font-size:1.5em;margin:12px 0">${subA} − ${subB} = <input class="math-input" id="subInput" type="number" min="0" max="10" placeholder="?" onkeyup="if(event.key==='Enter')checkSub()"></div><button class="btn btn-green" onclick="checkSub()">Kiểm tra ✓</button></div>`;document.getElementById('fbSub').textContent='';document.getElementById('fbSub').className='feedback'}
-function checkSub(){const val=parseInt(document.getElementById('subInput').value);const correct=subA-subB;const fb=document.getElementById('fbSub');const inp=document.getElementById('subInput');if(val===correct){fb.textContent=`⭑ Đúng! ${subA} − ${subB} = ${correct}`;fb.className='feedback correct';inp.className='math-input correct';lessonScore++;lessonCorrect++}else{fb.textContent=`Chưa đúng. ${subA} − ${subB} = ${correct}`;fb.className='feedback wrong';inp.className='math-input wrong'}lessonQuestions++;document.getElementById('subInput').disabled=true;updateLessonScore4();setTimeout(newSubQ,1800)}
-function updateLessonScore4(){document.getElementById('lscore4').textContent='✅'.repeat(lessonCorrect)+'❌'.repeat(lessonQuestions-lessonCorrect)}
+function initSubtraction(){
+  document.getElementById('addsubContent').innerHTML=`
+  <div class="lesson-content"><p>Phép trừ là <span class="highlight">bớt đi</span> một số lượng. Dấu trừ là dấu <strong>−</strong>.</p>
+  <div class="example">Ví dụ: Có 6 quả 🍎, ăn mất 2 quả. Còn lại <span class="highlight">4</span> quả.<br><strong>6 − 2 = 4</strong> (Sáu trừ hai bằng bốn)</div></div>
+  <div class="exercise-box"><h3>🎯 Bài tập: Tính phép trừ</h3><div id="subQ"></div>
+  <div class="feedback" id="fbSub"></div>
+  <div class="action-row"><button class="btn btn-blue" onclick="newSubQ()">Câu mới 🎲</button></div></div>`;
+  newSubQ();
+}
+function newSubQ(){subA=Math.floor(Math.random()*10)+1;subB=Math.floor(Math.random()*(subA+1));const items=[];const e='🍎';for(let i=0;i<subA;i++)items.push(`<span class="count-item">${e}</span>`);document.getElementById('subQ').innerHTML=`<div style="text-align:center"><p>Có ${subA} quả ${e}, bớt đi ${subB} quả. Còn mấy quả?</p><div class="count-area">${items.join('')}</div><div style="font-size:1.5em;margin:12px 0">${subA} − ${subB} = <input class="math-input" id="subInput" type="number" min="0" max="10" placeholder="?" onkeyup="if(event.key==='Enter')checkSub()"></div><button class="btn btn-green" onclick="checkSub()" style="display:block;margin:12px auto">Kiểm tra ✓</button></div>`;document.getElementById('fbSub').textContent='';document.getElementById('fbSub').className='feedback'}
+function checkSub(){const val=parseInt(document.getElementById('subInput').value);const correct=subA-subB;const fb=document.getElementById('fbSub');const inp=document.getElementById('subInput');if(val===correct){fb.textContent=`⭑ Đúng! ${subA} − ${subB} = ${correct}`;fb.className='feedback correct';inp.className='math-input correct';lessonScore++;lessonCorrect++}else{fb.textContent=`Chưa đúng. ${subA} − ${subB} = ${correct}`;fb.className='feedback wrong';inp.className='math-input wrong'}lessonQuestions++;updateLessonStars('lscore3');setTimeout(newSubQ,1800)}
 
-function lessonShapes(){
+let countFwdStart=0,countFwdStep=0,countFwdAnswer=0;
+function initCountFwd(){
+  document.getElementById('addsubContent').innerHTML=`
+  <div class="lesson-content"><p><span class="highlight">Đếm thêm</span> là cách làm phép cộng bằng cách đếm tiếp từ số đầu tiên!</p>
+  <div class="example"><strong>Ví dụ:</strong> 3 + 2 = ?<br>Bắt đầu từ 3, đếm thêm 2: <span class="highlight">3 → 4 → 5</span><br>Vậy 3 + 2 = <strong>5</strong></div></div>
+  <div class="exercise-box"><h3>🎯 Bài tập: Đếm thêm để tính</h3><div id="cfwdQ"></div>
+  <div class="feedback" id="fbCfwd"></div>
+  <div class="action-row"><button class="btn btn-blue" onclick="newCountFwdQ()">Câu mới 🎲</button></div></div>`;
+  newCountFwdQ();
+}
+function newCountFwdQ(){
+  countFwdStart=Math.floor(Math.random()*7);countFwdStep=Math.floor(Math.random()*(9-countFwdStart))+1;countFwdAnswer=countFwdStart+countFwdStep;
+  const em=['🐘','🐰','🐸','🐶','🐱','🍎','⭐','🌸'];const e=em[Math.floor(Math.random()*em.length)];
+  var items=[];for(let i=0;i<countFwdStart;i++)items.push(`<span class="count-item">${e}</span>`);
+  var itemsB=[];for(let i=0;i<countFwdStep;i++)itemsB.push(`<span class="count-item" style="opacity:.6">+${e}</span>`);
+  document.getElementById('cfwdQ').innerHTML=`<div style="text-align:center"><div class="count-area">${items.join('')}${itemsB.join('')}</div><p style="font-size:1.1em;margin:12px 0">Từ ${countFwdStart}, đếm thêm ${countFwdStep} số:</p><div class="number-row">${Array.from({length:countFwdStep},(_, i)=>`<div class="num-box" style="border-color:var(--blue)">${countFwdStart+i+1}</div>`).join('')}</div><div style="font-size:1.5em;margin:12px 0">${countFwdStart} + ${countFwdStep} = <input class="math-input" id="cfwdInput" type="number" min="0" max="10" placeholder="?" onkeyup="if(event.key==='Enter')checkCountFwd()"></div><button class="btn btn-green" onclick="checkCountFwd()" style="display:block;margin:12px auto">Kiểm tra ✓</button></div>`;
+  document.getElementById('fbCfwd').textContent='';document.getElementById('fbCfwd').className='feedback';
+}
+function checkCountFwd(){const val=parseInt(document.getElementById('cfwdInput').value);const fb=document.getElementById('fbCfwd');const inp=document.getElementById('cfwdInput');if(val===countFwdAnswer){fb.textContent=`⭑ Đúng! ${countFwdStart} + ${countFwdStep} = ${countFwdAnswer}`;fb.className='feedback correct';inp.className='math-input correct';lessonScore++;lessonCorrect++}else{fb.textContent=`Chưa đúng. ${countFwdStart} + ${countFwdStep} = ${countFwdAnswer}`;fb.className='feedback wrong';inp.className='math-input wrong'}lessonQuestions++;updateLessonStars('lscore3');setTimeout(newCountFwdQ,1800)}
+
+let countBackStart=0,countBackStep=0,countBackAnswer=0;
+function initCountBack(){
+  document.getElementById('addsubContent').innerHTML=`
+  <div class="lesson-content"><p><span class="highlight">Đếm bớt</span> là cách làm phép trừ bằng cách đếm lùi từ số đầu tiên!</p>
+  <div class="example"><strong>Ví dụ:</strong> 7 − 3 = ?<br>Bắt đầu từ 7, đếm lùi 3: <span class="highlight">7 → 6 → 5 → 4</span><br>Vậy 7 − 3 = <strong>4</strong></div></div>
+  <div class="exercise-box"><h3>🎯 Bài tập: Đếm bớt để tính</h3><div id="cbackQ"></div>
+  <div class="feedback" id="fbCback"></div>
+  <div class="action-row"><button class="btn btn-blue" onclick="newCountBackQ()">Câu mới 🎲</button></div></div>`;
+  newCountBackQ();
+}
+function newCountBackQ(){
+  countBackStart=Math.floor(Math.random()*8)+2;countBackStep=Math.floor(Math.random()*(countBackStart-1))+1;countBackAnswer=countBackStart-countBackStep;
+  const em=['🐘','🐰','🐸','🐶','🐱','🍎','⭐','🌸'];const e=em[Math.floor(Math.random()*em.length)];
+  var items=[];for(let i=0;i<countBackStart;i++)items.push(`<span class="count-item">${e}</span>`);
+  document.getElementById('cbackQ').innerHTML=`<div style="text-align:center"><div class="count-area">${items.join('')}</div><p style="font-size:1.1em;margin:12px 0">Từ ${countBackStart}, đếm lùi ${countBackStep} số:</p><div class="number-row">${Array.from({length:countBackStep},(_, i)=>`<div class="num-box" style="border-color:var(--accent)">${countBackStart-i-1}</div>`).join('')}</div><div style="font-size:1.5em;margin:12px 0">${countBackStart} − ${countBackStep} = <input class="math-input" id="cbackInput" type="number" min="0" max="10" placeholder="?" onkeyup="if(event.key==='Enter')checkCountBack()"></div><button class="btn btn-green" onclick="checkCountBack()" style="display:block;margin:12px auto">Kiểm tra ✓</button></div>`;
+  document.getElementById('fbCback').textContent='';document.getElementById('fbCback').className='feedback';
+}
+function checkCountBack(){const val=parseInt(document.getElementById('cbackInput').value);const fb=document.getElementById('fbCback');const inp=document.getElementById('cbackInput');if(val===countBackAnswer){fb.textContent=`⭑ Đúng! ${countBackStart} − ${countBackStep} = ${countBackAnswer}`;fb.className='feedback correct';inp.className='math-input correct';lessonScore++;lessonCorrect++}else{fb.textContent=`Chưa đúng. ${countBackStart} − ${countBackStep} = ${countBackAnswer}`;fb.className='feedback wrong';inp.className='math-input wrong'}lessonQuestions++;updateLessonStars('lscore3');setTimeout(newCountBackQ,1800)}
+
+// ===== THEME 4: CÁC SỐ ĐẾN 100 =====
+function lessonNumbers100(){
 return `<button class="back-btn" onclick="goHome()">← Về trang chính</button>
-<div class="nav-row"><h2>🔷 Hình Học Cơ Bản</h2><span class="emoji" id="lscore5"></span></div>
-<div class="lesson-content"><p>Các em hãy làm quen với <span class="highlight">4 hình</span> cơ bản:</p>
-<div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;justify-content:center;margin:16px 0">
-<div style="text-align:center"><span class="shape-box square-shape" style="width:70px;height:70px;border-radius:14px">■</span><p>Hình vuông</p></div>
-<div style="text-align:center"><span class="shape-box circle-shape" style="width:70px;height:70px;border-radius:50%">●</span><p>Hình tròn</p></div>
-<div style="text-align:center"><span class="triangle-shape" style="display:inline-block"></span><p>Hình tam giác</p></div>
-<div style="text-align:center"><span class="shape-box rect-shape" style="width:70px;height:50px;border-radius:8px">▬</span><p>Hình chữ nhật</p></div>
-</div></div>
-<div class="exercise-box"><h3>Bài tập: Tìm hình đúng</h3><p id="shapeQ"></p>
-<div class="option-grid" id="shapeOpts"></div>
-<div class="feedback" id="fbShape"></div></div>
+<div class="nav-row"><h2>💯 Các Số Đến 100</h2><span class="emoji" id="lscore4"></span></div>
+<div class="mode-tabs">
+<div class="mode-tab active" id="tab-tens" onclick="switchTab('tab-tens',initTens)">Chục & Đơn Vị</div>
+<div class="mode-tab" id="tab-2digit" onclick="switchTab('tab-2digit',init2Digit)">Số Đến 100</div>
+<div class="tab" id="tab-addsub100" onclick="switchTab('tab-addsub100',initAddSub100)">Cộng Trừ</div>
+<div class="mode-tab" id="tab-compare100" onclick="switchTab('tab-compare100',initCompare100)">So Sánh</div>
+</div>
+<div id="num100Content"></div>
 <div class="action-row"><button class="btn btn-accent" onclick="finishLesson()">Hoàn thành bài học ✅</button></div>`;
 }
+function initNumbers100(){initTens()}
 
-let shapeNames=['hình tròn','hình vuông','hình tam giác','hình chữ nhật'];
-let shapeSymbols=['●','■','▲','▬'];
-let currentShape='';
-function initShapes(){newShapeQ()}
-function newShapeQ(){const i=Math.floor(Math.random()*4);currentShape=shapeNames[i];document.getElementById('shapeQ').textContent=`Em hãy chọn ${currentShape}:`;document.getElementById('shapeOpts').innerHTML=shapeSymbols.map((s,j)=>`<div class="shape-box ${j===0?'circle-shape':j===1?'square-shape':j===3?'rect-shape':''}" style="${j===2?'width:0;height:0;border-left:30px solid transparent;border-right:30px solid transparent;border-bottom:50px solid var(--green);border-radius:0;border:none;font-size:0':j===0?'border-radius:50%':j===1?'border-radius:14px':j===3?'border-radius:8px;height:45px':''}" onclick="checkShape(${j},this)">${j!==2?s:''}</div>`).join('');document.getElementById('fbShape').textContent='';document.getElementById('fbShape').className='feedback'}
-function checkShape(idx,el){const correctIdx=shapeNames.indexOf(currentShape);const fb=document.getElementById('fbShape');if(idx===correctIdx){fb.textContent='⭑ Đúng rồi! Em giỏi quá!';fb.className='feedback correct';lessonScore++;lessonCorrect++}else{fb.textContent=`Chưa đúng. Đây là ${shapeNames[idx]}. Hãy thử lại!`;fb.className='feedback wrong'}lessonQuestions++;updateLessonScore5();setTimeout(newShapeQ,1500)}
-function updateLessonScore5(){document.getElementById('lscore5').textContent='✅'.repeat(lessonCorrect)+'❌'.repeat(lessonQuestions-lessonCorrect)}
+let tensQ={type:'',tens:0,units:0};
+function initTens(){
+  document.getElementById('num100Content').innerHTML=`
+  <div class="lesson-content"><p>Học về <span class="highlight">chục</span> và <span class="highlight">đơn vị</span>! 10 đơn vị = 1 chục.</p>
+  <div class="example"><strong> Ví dụ:</strong> Số 23 có <span class="highlight">2 chục</span> và <span class="highlight">3 đơn vị</span><br>23 = 20 + 3</div>
+  <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin:16px 0">
+  <div style="text-align:center;padding:16px;background:var(--light);border-radius:16px"><p style="font-size:1.5em">🔟🔟🔟</p><p><strong>3 chục</strong> = 30</p></div>
+  <div style="text-align:center;padding:16px;background:var(--light);border-radius:16px"><p style="font-size:1.5em">🔟🔟🔟🔟</p><p><strong>4 chục</strong> = 40</p></div>
+  <div style="text-align:center;padding:16px;background:var(--light);border-radius:16px"><p style="font-size:1.5em">🔟🔟🔟🔟🔟</p><p><strong>5 chục</strong> = 50</p></div>
+  </div></div>
+  <div class="exercise-box"><h3>🎯 Bài tập: Chục và đơn vị</h3><div id="tensQ"></div>
+  <div class="feedback" id="fbTens"></div>
+  <div class="action-row"><button class="btn btn-blue" onclick="newTensQ()">Câu mới 🎲</button></div></div>`;
+  newTensQ();
+}
+function newTensQ(){
+  if(Math.random()<0.5){newTensQ1()}else{newTensQ2()}
+}
+function newTensQ1(){
+  const tens=Math.floor(Math.random()*9)+1;const units=Math.floor(Math.random()*10);
+  const num=tens*10+units;
+  document.getElementById('tensQ').innerHTML=`<p style="text-align:center;font-size:1.2em;margin:12px 0">Số <strong style="font-size:1.5em">${num}</strong> có mấy chục và mấy đơn vị?</p><div style="text-align:center;font-size:1.3em;margin:12px 0">${num} = <input class="math-input" id="tensInput1" type="number" min="0" max="9" placeholder="?" style="width:60px"> chục và <input class="math-input" id="tensInput2" type="number" min="0" max="9" placeholder="?" style="width:60px"> đơn vị</div><button class="btn btn-green" onclick="checkTens()" style="display:block;margin:12px auto">Kiểm tra ✓</button>`;
+  document.getElementById('fbTens').textContent='';document.getElementById('fbTens').className='feedback';
+  tensQ={type:'decompose',tens,units};
+}
+function newTensQ2(){
+  const tens=Math.floor(Math.random()*9)+1;const units=Math.floor(Math.random()*10);
+  document.getElementById('tensQ').innerHTML=`<p style="text-align:center;font-size:1.2em;margin:12px 0"><strong style="font-size:1.5em">${tens}</strong> chục và <strong style="font-size:1.5em">${units}</strong> đơn vị là số nào?</p><div style="text-align:center;font-size:1.5em;margin:12px 0"><input class="math-input" id="tensInput1" type="number" min="0" max="99" placeholder="?" style="width:80px"></div><button class="btn btn-green" onclick="checkTens()" style="display:block;margin:12px auto">Kiểm tra ✓</button>`;
+  document.getElementById('fbTens').textContent='';document.getElementById('fbTens').className='feedback';
+  tensQ={type:'compose',tens,units};
+}
+function checkTens(){const v1=parseInt(document.getElementById('tensInput1').value);const v2El=document.getElementById('tensInput2');const v2=v2El?parseInt(v2El.value):NaN;const fb=document.getElementById('fbTens');const inp=document.getElementById('tensInput1');if(tensQ.type==='decompose'){if(v1===tensQ.tens&&v2===tensQ.units){fb.textContent='⭑ Đúng rồi! Giỏi quá!';fb.className='feedback correct';inp.className='math-input correct';if(v2El)v2El.className='math-input correct';lessonScore++;lessonCorrect++}else{fb.textContent=`Chưa đúng. ${tensQ.tens*10+tensQ.units} = ${tensQ.tens} chục và ${tensQ.units} đơn vị`;fb.className='feedback wrong';inp.className='math-input wrong';if(v2El)v2El.className='math-input wrong'}}else{const correct=tensQ.tens*10+tensQ.units;if(v1===correct){fb.textContent='⭑ Đúng rồi! Giỏi quá!';fb.className='feedback correct';inp.className='math-input correct';lessonScore++;lessonCorrect++}else{fb.textContent=`Chưa đúng. ${tensQ.tens} chục và ${tensQ.units} đơn vị = ${correct}`;fb.className='feedback wrong';inp.className='math-input wrong'}}lessonQuestions++;updateLessonStars('lscore4');setTimeout(newTensQ,1800)}
 
-function lesson3DShapes(){
+let digit2Q={num:0};
+function init2Digit(){
+  document.getElementById('num100Content').innerHTML=`
+  <div class="lesson-content"><p>Học <span class="highlight">đọc, viết, đếm</span> các số có hai chữ số đến 100!</p>
+  <div class="example"><strong>Số tròn chục:</strong> 10, 20, 30, 40, 50, 60, 70, 80, 90, 100<br><strong>Số có hai chữ số:</strong> 11, 12, 13, ..., 99</div></div>
+  <div class="exercise-box"><h3>🎯 Bài tập: Đọc và viết số</h3><div id="d2q"></div>
+  <div class="feedback" id="fbD2"></div>
+  <div class="action-row"><button class="btn btn-blue" onclick="newD2Q()">Câu mới 🎲</button></div></div>`;
+  newD2Q();
+}
+function newD2Q(){
+  if(Math.random()<0.3){newRoundTenQ()}else{newReadNumQ()}
+}
+function newRoundTenQ(){
+  const tens=Math.floor(Math.random()*9)+1;
+  const num=tens*10;
+  const vietNamese=['','mười','hai mươi','ba mươi','bốn mươi','năm mươi','sáu mươi','bảy mươi','tám mươi','chín mươi'];
+  const opts=[vietNamese[tens]];
+  const others=vietNamese.filter((_,i)=>i>0&&i!==tens);
+  others.sort(()=>Math.random()-.5);
+  for(let i=0;i<3&&i<others.length;i++)opts.push(others[i]);
+  opts.sort(()=>Math.random()-.5);
+  document.getElementById('d2q').innerHTML=`<p style="text-align:center;font-size:1.2em;margin:12px 0">Số <strong style="font-size:2em">${num}</strong> đọc là gì?</p><div class="option-grid">${opts.map(o=>`<div class="option-btn" style="font-size:.9em" onclick="checkD2('${o}','${vietNamese[tens]}',this)">${o}</div>`).join('')}</div>`;
+  document.getElementById('fbD2').textContent='';document.getElementById('fbD2').className='feedback';
+}
+function newReadNumQ(){
+  const num=Math.floor(Math.random()*89)+11;
+  document.getElementById('d2q').innerHTML=`<p style="text-align:center;font-size:1.2em;margin:12px 0">Số <strong style="font-size:1.5em">${num}</strong> có mấy chục và mấy đơn vị?</p><div style="text-align:center;font-size:1.3em;margin:12px 0">${num} = <input class="math-input" id="d2Input1" type="number" min="0" max="9" placeholder="?" style="width:60px"> chục và <input class="math-input" id="d2Input2" type="number" min="0" max="9" placeholder="?" style="width:60px"> đơn vị</div><button class="btn btn-green" onclick="checkD2Num(${num})" style="display:block;margin:12px auto">Kiểm tra ✓</button>`;
+  document.getElementById('fbD2').textContent='';document.getElementById('fbD2').className='feedback';
+  digit2Q={num};
+}
+function checkD2(selected,correct,el){const fb=document.getElementById('fbD2');document.querySelectorAll('#d2q .option-btn').forEach(b=>b.style.pointerEvents='none');if(selected===correct){fb.textContent='⭑ Đúng rồi!';fb.className='feedback correct';el.classList.add('correct');lessonScore++;lessonCorrect++}else{fb.textContent=`Chưa đúng. Đáp án là "${correct}".`;fb.className='feedback wrong';el.classList.add('wrong')}lessonQuestions++;document.querySelectorAll('#d2q .option-btn').forEach(b=>{if(b.textContent===correct)b.classList.add('correct')});updateLessonStars('lscore4');setTimeout(newD2Q,1500)}
+function checkD2Num(num){const v1=parseInt(document.getElementById('d2Input1').value);const v2=parseInt(document.getElementById('d2Input2').value);const fb=document.getElementById('fbD2');const correctTens=Math.floor(num/10);const correctUnits=num%10;if(v1===correctTens&&v2===correctUnits){fb.textContent='⭑ Đúng rồi!';fb.className='feedback correct';lessonScore++;lessonCorrect++}else{fb.textContent=`Chưa đúng. ${num} = ${correctTens} chục và ${correctUnits} đơn vị`;fb.className='feedback wrong'}lessonQuestions++;updateLessonStars('lscore4');setTimeout(newD2Q,1800)}
+
+let addsub100Q={a:0,b:0,op:'+'};
+function initAddSub100(){
+  document.getElementById('num100Content').innerHTML=`
+  <div class="lesson-content"><p>Học <span class="highlight">cộng, trừ</span> các số có hai chữ số (không nhớ)!</p>
+  <div class="example"><strong>Ví dụ:</strong> 34 + 23 = ?<br>30 + 20 = 50, 4 + 3 = 7 → <span class="highlight">57</span><br><strong>34 + 23 = 57</strong></div></div>
+  <div class="exercise-box"><h3>🎯 Bài tập: Tính cộng, trừ</h3><div id="as100q"></div>
+  <div class="feedback" id="fbAS100"></div>
+  <div class="action-row"><button class="btn btn-blue" onclick="newAS100Q()">Câu mới 🎲</button></div></div>`;
+  newAS100Q();
+}
+function newAS100Q(){
+  const isAdd=Math.random()>0.5;
+  if(isAdd){
+    const a=Math.floor(Math.random()*40)+10;const b=Math.floor(Math.random()*(99-a-9))+1;
+    addsub100Q={a,b,op:'+'};
+  }else{
+    const a=Math.floor(Math.random()*60)+30;const b=Math.floor(Math.random()*(a-9))+1;
+    addsub100Q={a,b,op:'-'};
+  }
+  const opSymbol=addsub100Q.op==='+'?'+':'−';
+  const result=addsub100Q.op==='+'?addsub100Q.a+addsub100Q.b:addsub100Q.a-addsub100Q.b;
+  document.getElementById('as100q').innerHTML=`<div style="text-align:center;font-size:1.5em;margin:12px 0">${addsub100Q.a} ${opSymbol} ${addsub100Q.b} = <input class="math-input" id="as100Input" type="number" min="0" max="100" placeholder="?" style="width:80px" onkeyup="if(event.key==='Enter')checkAS100()"></div><button class="btn btn-green" onclick="checkAS100()" style="display:block;margin:12px auto">Kiểm tra ✓</button>`;
+  document.getElementById('fbAS100').textContent='';document.getElementById('fbAS100').className='feedback';
+}
+function checkAS100(){const val=parseInt(document.getElementById('as100Input').value);const correct=addsub100Q.op==='+'?addsub100Q.a+addsub100Q.b:addsub100Q.a-addsub100Q.b;const fb=document.getElementById('fbAS100');const inp=document.getElementById('as100Input');const opSymbol=addsub100Q.op==='+'?'+':'−';if(val===correct){fb.textContent=`⭑ Đúng! ${addsub100Q.a} ${opSymbol} ${addsub100Q.b} = ${correct}`;fb.className='feedback correct';inp.className='math-input correct';lessonScore++;lessonCorrect++}else{fb.textContent=`Chưa đúng. ${addsub100Q.a} ${opSymbol} ${addsub100Q.b} = ${correct}`;fb.className='feedback wrong';inp.className='math-input wrong'}lessonQuestions++;updateLessonStars('lscore4');setTimeout(newAS100Q,1800)}
+
+let compare100Q={a:0,b:0};
+function initCompare100(){
+  document.getElementById('num100Content').innerHTML=`
+  <div class="lesson-content"><p>Học <span class="highlight">so sánh</span> các số đến 100! So sánh chữ số hàng chục trước, nếu bằng nhau thì so sánh hàng đơn vị.</p>
+  <div class="example"><strong>Ví dụ:</strong> So sánh 45 và 38<br>4 chục > 3 chục → <span class="highlight">45 > 38</span></div></div>
+  <div class="exercise-box"><h3>🎯 Bài tập: So sánh số</h3><div id="c100q"></div>
+  <div class="feedback" id="fbC100"></div>
+  <div class="action-row"><button class="btn btn-blue" onclick="newC100Q()">Câu mới 🎲</button></div></div>`;
+  newC100Q();
+}
+function newC100Q(){
+  compare100Q.a=Math.floor(Math.random()*90)+10;compare100Q.b=Math.floor(Math.random()*90)+10;
+  document.getElementById('c100q').innerHTML=`<div class="compare-cards"><div class="compare-card" style="min-width:80px"><div class="n" style="font-size:3em">${compare100Q.a}</div></div><div style="font-size:2em;animation:float 2s ease-in-out infinite">🐊</div><div class="compare-card" style="min-width:80px"><div class="n" style="font-size:3em">${compare100Q.b}</div></div></div><p style="text-align:center;font-size:1.3em;margin:12px 0">${compare100Q.a} <span class="highlight">?</span> ${compare100Q.b}</p><div class="option-grid">${['>','<','='].map(s=>`<div class="option-btn" style="font-size:1.5em" onclick="checkC100('${s}',this)">${s}</div>`).join('')}</div>`;
+  document.getElementById('fbC100').textContent='';document.getElementById('fbC100').className='feedback';
+}
+function checkC100(sign,el){var a=compare100Q.a,b=compare100Q.b,correctSign=a>b?'>':a<b?'<':'=';var word=a>b?'lớn hơn':a<b?'bé hơn':'bằng';const fb=document.getElementById('fbC100');document.querySelectorAll('#c100q .option-btn').forEach(b=>b.style.pointerEvents='none');if(sign===correctSign){fb.textContent='⭑ Đúng! '+a+' '+correctSign+' '+b;fb.className='feedback correct';el.classList.add('correct');lessonScore++;lessonCorrect++}else{fb.textContent='Chưa đúng. '+a+' '+word+' '+b;fb.className='feedback wrong';el.classList.add('wrong')}lessonQuestions++;document.querySelectorAll('#c100q .option-btn').forEach(b=>{if(b.textContent===correctSign)b.classList.add('correct')});updateLessonStars('lscore4');setTimeout(newC100Q,2000)}
+
+// ===== THEME 5: ĐỒNG HỒ & LỊCH =====
+function lessonClock(){
 return `<button class="back-btn" onclick="goHome()">← Về trang chính</button>
-<div class="nav-row"><h2>🧊 Khối Hình Không Gian</h2><span class="emoji" id="lscore6"></span></div>
-<div class="lesson-content"><p>Làm quen với hai khối hình:</p>
-<div style="display:flex;gap:30px;flex-wrap:wrap;align-items:center;justify-content:center;margin:16px 0">
-<div style="text-align:center"><div style="width:60px;height:60px;background:var(--accent);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;margin:0 auto;font-size:1.5em;border:3px solid var(--accent2)">■</div><p><strong>Khối lập phương</strong></p><p style="font-size:.85em;color:var(--text2)">Ví dụ: hộp quà, xúc xắc</p></div>
-<div style="text-align:center"><div style="width:80px;height:50px;background:var(--purple);color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;margin:0 auto;font-size:1.5em;border:3px solid #7950f2">▬</div><p><strong>Khối hộp chữ nhật</strong></p><p style="font-size:.85em;color:var(--text2)">Ví dụ: hộp bút, tủ lạnh</p></div>
-</div></div>
-<div class="exercise-box"><h3>Bài tập: Đoán tên khối hình</h3><div id="d3q"></div>
-<div class="feedback" id="fb3d"></div></div>
+<div class="nav-row"><h2>🕐 Đồng Hồ & Lịch</h2><span class="emoji" id="lscore5"></span></div>
+<div class="mode-tabs">
+<div class="mode-tab active" id="tab-clock" onclick="switchTab('tab-clock',initClockFace)">Đồng Hồ</div>
+<div class="mode-tab" id="tab-days" onclick="switchTab('tab-days',initDays)">Ngày Trong Tuần</div>
+<div class="mode-tab" id="tab-calendar" onclick="switchTab('tab-calendar',initCalendar)">Tờ Lịch</div>
+</div>
+<div id="clockContent"></div>
 <div class="action-row"><button class="btn btn-accent" onclick="finishLesson()">Hoàn thành bài học ✅</button></div>`;
 }
+function initClock(){initClockFace()}
 
-let is3DCube=true;
-function init3DShapes(){new3DQ()}
-function new3DQ(){is3DCube=Math.random()>0.5;const shapeEl=is3DCube?'<div style="width:60px;height:60px;background:var(--accent);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.5em;margin:0 auto;border:3px solid var(--accent2)">■</div>':'<div style="width:80px;height:50px;background:var(--purple);color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.5em;margin:0 auto;border:3px solid #7950f2">▬</div>';document.getElementById('d3q').innerHTML=`<div style="text-align:center">${shapeEl}</div><p style="text-align:center;margin:12px 0">Đây là khối hình gì?</p><div class="option-grid">${['Khối lập phương','Khối hộp chữ nhật'].map(o=>`<div class="option-btn" onclick="check3D('${o}',this)" style="font-size:.95em">${o}</div>`).join('')}</div>`;document.getElementById('fb3d').textContent='';document.getElementById('fb3d').className='feedback'}
-function check3D(label,el){const answer=is3DCube?'Khối lập phương':'Khối hộp chữ nhật';const fb=document.getElementById('fb3d');if(label===answer){fb.textContent='⭑ Đúng rồi!';fb.className='feedback correct';lessonScore++;lessonCorrect++}else{fb.textContent=`Chưa đúng. Đây là ${answer}.`;fb.className='feedback wrong'}lessonQuestions++;document.querySelectorAll('#d3q .option-btn').forEach(b=>b.style.pointerEvents='none');document.querySelectorAll('#d3q .option-btn').forEach(b=>{if(b.textContent===answer)b.classList.add('correct')});updateLessonScore6();setTimeout(new3DQ,1500)}
-function updateLessonScore6(){document.getElementById('lscore6').textContent='✅'.repeat(lessonCorrect)+'❌'.repeat(lessonQuestions-lessonCorrect)}
+let clockHour=0;
+function initClockFace(){
+  document.getElementById('clockContent').innerHTML=`
+  <div class="lesson-content"><p>Học <span class="highlight">xem giờ đúng</span> trên đồng hồ! Kim ngắn chỉ giờ, kim dài chỉ phút.</p>
+  <div class="example"><strong>Giờ đúng:</strong> Kim dài chỉ số <span class="highlight">12</span>, kim ngắn chỉ số mấy thì là giờ đó.<br>Ví dụ: Kim ngắn chỉ số 3 → <strong>3 giờ</strong></div></div>
+  <div class="exercise-box"><h3>🎯 Bài tập: Xem đồng hồ</h3><div id="clockQ"></div>
+  <div class="feedback" id="fbClock"></div>
+  <div class="action-row"><button class="btn btn-blue" onclick="newClockQ()">Câu mới 🎲</button></div></div>`;
+  newClockQ();
+}
+function newClockQ(){
+  clockHour=Math.floor(Math.random()*12)+1;
+  const hourAngle=(clockHour%12)*30;
+  document.getElementById('clockQ').innerHTML=`<div class="clock-face">
+  <div class="clock-center"></div>
+  <div class="clock-hand hour-hand" style="transform:rotate(${hourAngle}deg)"></div>
+  <div class="clock-hand minute-hand" style="transform:rotate(0deg)"></div>
+  ${[12,1,2,3,4,5,6,7,8,9,10,11].map((n,i)=>{const angle=(i*30-90)*Math.PI/180;const r=80;const x=100+r*Math.cos(angle)-8;const y=100+r*Math.sin(angle)-8;return `<span class="clock-number" style="left:${x}px;top:${y}px">${n}</span>`}).join('')}
+  </div><p style="text-align:center;font-size:1.2em;margin:12px 0">Đồng hồ chỉ mấy giờ?</p><div class="input-row"><input class="math-input" id="clockInput" type="number" min="1" max="12" placeholder="?" onkeyup="if(event.key==='Enter')checkClock()"><span style="font-size:1.3em;font-weight:700">giờ</span><button class="btn btn-green" onclick="checkClock()">Kiểm tra ✓</button></div>`;
+  document.getElementById('fbClock').textContent='';document.getElementById('fbClock').className='feedback';
+}
+function checkClock(){const val=parseInt(document.getElementById('clockInput').value);const fb=document.getElementById('fbClock');const inp=document.getElementById('clockInput');if(val===clockHour){fb.textContent=`⭑ Đúng! Đồng hồ chỉ ${clockHour} giờ!`;fb.className='feedback correct';inp.className='math-input correct';lessonScore++;lessonCorrect++}else{fb.textContent=`Chưa đúng. Đồng hồ chỉ ${clockHour} giờ.`;fb.className='feedback wrong';inp.className='math-input wrong'}lessonQuestions++;updateLessonStars('lscore5');setTimeout(newClockQ,1800)}
 
-function lessonPosition(){
+let dayQIdx=0;
+function initDays(){
+  document.getElementById('clockContent').innerHTML=`
+  <div class="lesson-content"><p>Một tuần có <span class="highlight">7 ngày</span>:</p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:16px 0">
+  ${['Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7','Chủ nhật'].map((d,i)=>`<div style="padding:12px 16px;background:${i<5?'var(--blue)':'var(--accent)'};color:#fff;border-radius:12px;font-weight:700;font-size:.9em">${d}</div>`).join('')}
+  </div>
+  <div class="example"><strong>Thứ 2 đến Thứ 6:</strong> Ngày đi học 🏫<br><strong>Thứ 7, Chủ nhật:</strong> Ngày nghỉ 🎉</div></div>
+  <div class="exercise-box"><h3>🎯 Bài tập: Ngày trong tuần</h3><div id="dayQ"></div>
+  <div class="feedback" id="fbDay"></div>
+  <div class="action-row"><button class="btn btn-blue" onclick="newDayQ()">Câu mới 🎲</button></div></div>`;
+  newDayQ();
+}
+const dayQuestions=[
+  {q:'Hôm nay là Thứ 3. Ngày mai là thứ mấy?',opts:['Thứ 2','Thứ 3','Thứ 4','Thứ 5'],ans:2},
+  {q:'Hôm nay là Thứ 6. Ngày mai là thứ mấy?',opts:['Thứ 5','Thứ 6','Thứ 7','Chủ nhật'],ans:2},
+  {q:'Một tuần có mấy ngày?',opts:['5 ngày','6 ngày','7 ngày','8 ngày'],ans:2},
+  {q:'Ngày nghỉ trong tuần là những ngày nào?',opts:['Thứ 2, Thứ 3','Thứ 5, Thứ 6','Thứ 7, Chủ nhật','Thứ 4, Thứ 5'],ans:2},
+  {q:'Hôm nay là Chủ nhật. Ngày mai là thứ mấy?',opts:['Thứ 7','Thứ 2','Thứ 6','Thứ 3'],ans:1},
+  {q:'Hôm nay là Thứ 2. Hôm qua là thứ mấy?',opts:['Thứ 3','Chủ nhật','Thứ 7','Thứ 4'],ans:1},
+  {q:'Em đi học từ Thứ 2 đến Thứ 6. Em đi học mấy ngày?',opts:['4 ngày','5 ngày','6 ngày','7 ngày'],ans:1}
+];
+function newDayQ(){dayQIdx=Math.floor(Math.random()*dayQuestions.length);const dq=dayQuestions[dayQIdx];document.getElementById('dayQ').innerHTML=`<p style="text-align:center;font-size:1.15em;margin:12px 0">${dq.q}</p><div class="option-grid">${dq.opts.map((o,i)=>`<div class="option-btn" onclick="checkDay(${i},this)">${o}</div>`).join('')}</div>`;document.getElementById('fbDay').textContent='';document.getElementById('fbDay').className='feedback'}
+function checkDay(idx,el){const dq=dayQuestions[dayQIdx];const fb=document.getElementById('fbDay');if(idx===dq.ans){fb.textContent='⭑ Đúng! Em rất giỏi!';fb.className='feedback correct';el.classList.add('correct');lessonScore++;lessonCorrect++}else{fb.textContent=`Chưa đúng. Đáp án là "${dq.opts[dq.ans]}".`;fb.className='feedback wrong';el.classList.add('wrong')}lessonQuestions++;document.querySelectorAll('#dayQ .option-btn').forEach(b=>b.style.pointerEvents='none');document.querySelectorAll('#dayQ .option-btn').forEach((b,i)=>{if(i===dq.ans)b.classList.add('correct')});updateLessonStars('lscore5');setTimeout(newDayQ,1800)}
+
+function initCalendar(){
+  const today=new Date();const year=today.getFullYear();const month=today.getMonth();
+  const firstDay=new Date(year,month,1).getDay();const daysInMonth=new Date(year,month+1,0).getDate();
+  const startDay=firstDay===0?6:firstDay-1;
+  const monthNames=['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'];
+  const dayHeaders=['T2','T3','T4','T5','T6','T7','CN'];
+  let calHTML=`<div class="lesson-content"><p>Đây là <span class="highlight">tờ lịch</span> tháng ${month+1} năm ${year}. Các em hãy nhìn và trả lời câu hỏi nhé!</p>
+  <h3 style="text-align:center;margin:12px 0">${monthNames[month]} ${year}</h3>
+  <div class="calendar-grid">${dayHeaders.map(d=>`<div class="cal-header">${d}</div>`).join('')}`;
+  for(let i=0;i<startDay;i++)calHTML+=`<div class="cal-day empty"></div>`;
+  for(let d=1;d<=daysInMonth;d++){const isToday=d===today.getDate();calHTML+=`<div class="cal-day${isToday?' today':''}">${d}</div>`}
+  calHTML+=`</div></div>`;
+  calHTML+=`<div class="exercise-box"><h3>🎯 Bài tập: Xem lịch</h3><div id="calQ"></div><div class="feedback" id="fbCal"></div><div class="action-row"><button class="btn btn-blue" onclick="newCalQ()">Câu mới 🎲</button></div></div>`;
+  document.getElementById('clockContent').innerHTML=calHTML;
+  newCalQ();
+}
+let calQData={};
+function newCalQ(){
+  const today=new Date();const year=today.getFullYear();const month=today.getMonth();
+  const firstDay=new Date(year,month,1).getDay();const daysInMonth=new Date(year,month+1,0).getDate();
+  const startDay=firstDay===0?6:firstDay-1;
+  const questions=[
+    {q:`Tháng này có bao nhiêu ngày?`,ans:daysInMonth.toString(),genOpts:()=>{const opts=[daysInMonth.toString()];while(opts.length<4){const x=Math.floor(Math.random()*10)+20;if(!opts.includes(x.toString()))opts.push(x.toString())}opts.sort(()=>Math.random()-.5);return opts}},
+    {q:`Ngày ${Math.min(today.getDate(),daysInMonth)} là thứ mấy?`,ans:()=>{const d=Math.min(today.getDate(),daysInMonth);const dayOfWeek=(startDay+d-1)%7;const days=['Chủ nhật','Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7'];return days[dayOfWeek]},genOpts:()=>{const d=Math.min(today.getDate(),daysInMonth);const dayOfWeek=(startDay+d-1)%7;const days=['Chủ nhật','Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7'];const correct=days[dayOfWeek];const opts=[correct];const others=days.filter(d=>d!==correct);others.sort(()=>Math.random()-.5);for(let i=0;i<3;i++)opts.push(others[i]);opts.sort(()=>Math.random()-.5);return opts}},
+    {q:`Hôm nay là ngày ${today.getDate()}. Tháng này là tháng mấy?`,ans:(month+1).toString(),genOpts:()=>{const correct=(month+1).toString();const opts=[correct];while(opts.length<4){const x=Math.floor(Math.random()*12)+1;if(!opts.includes(x.toString()))opts.push(x.toString())}opts.sort(()=>Math.random()-.5);return opts}}
+  ];
+  const q=questions[Math.floor(Math.random()*questions.length)];
+  const correctAns=typeof q.ans==='function'?q.ans():q.ans;
+  const opts=q.genOpts();
+  document.getElementById('calQ').innerHTML=`<p style="text-align:center;font-size:1.15em;margin:12px 0">${q.q}</p><div class="option-grid">${opts.map(o=>`<div class="option-btn" onclick="checkCal('${o}','${correctAns}',this)">${o}</div>`).join('')}</div>`;
+  document.getElementById('fbCal').textContent='';document.getElementById('fbCal').className='feedback';
+}
+function checkCal(selected,correct,el){const fb=document.getElementById('fbCal');document.querySelectorAll('#calQ .option-btn').forEach(b=>b.style.pointerEvents='none');if(selected===correct){fb.textContent='⭑ Đúng rồi!';fb.className='feedback correct';el.classList.add('correct');lessonScore++;lessonCorrect++}else{fb.textContent=`Chưa đúng. Đáp án là ${correct}.`;fb.className='feedback wrong';el.classList.add('wrong')}lessonQuestions++;document.querySelectorAll('#calQ .option-btn').forEach(b=>{if(b.textContent===correct)b.classList.add('correct')});updateLessonStars('lscore5');setTimeout(newCalQ,1800)}
+
+// ===== THEME 6: ĐO ĐỘ DÀI =====
+function lessonLength(){
 return `<button class="back-btn" onclick="goHome()">← Về trang chính</button>
-<div class="nav-row"><h2>📐 Vị Trí Trong Không Gian</h2><span class="emoji" id="lscore7"></span></div>
-<div class="lesson-content"><p>Học về <span class="highlight">vị trí</span> của đồ vật trong không gian:</p>
-<div class="example"><strong>Trên — Dưới:</strong> Quyển sách <span class="highlight">ở trên</span> bàn, dép <span class="highlight">ở dưới</span> bàn.<br><strong>Trước — Sau:</strong> Bạn A <span class="highlight">ở trước</span> bạn B, bạn B <span class="highlight">ở sau</span> bạn A.<br><strong>Phải — Trái:</strong> Tay <span class="highlight">phải</span> cầm bút, tay <span class="highlight">trái</span> giữ vở.</div></div>
-<div class="exercise-box"><h3>Bài tập: Chọn vị trí đúng</h3><div id="posQ"></div>
-<div class="feedback" id="fbPos"></div></div>
+<div class="nav-row"><h2>📏 Đo Độ Dài</h2><span class="emoji" id="lscore6"></span></div>
+<div class="mode-tabs">
+<div class="mode-tab active" id="tab-compare" onclick="switchTab('tab-compare',initLengthCompare)">So Sánh</div>
+<div class="mode-tab" id="tab-measure" onclick="switchTab('tab-measure',initMeasure)">Đo Độ Dài</div>
+<div class="mode-tab" id="tab-cm" onclick="switchTab('tab-cm',initCm)">Xăng-ti-mét</div>
+</div>
+<div id="lengthContent"></div>
 <div class="action-row"><button class="btn btn-accent" onclick="finishLesson()">Hoàn thành bài học ✅</button></div>`;
 }
+function initLength(){initLengthCompare()}
 
-let posQuestions=[{q:'Đồng hồ treo trên tường. Đồng hồ ở vị trí nào?',opts:['trên','dưới','trái','phải'],ans:0},
-{q:'Thảm trải ở sàn nhà. Thảm ở vị trí nào so với bàn?',opts:['trên','dưới','trước','sau'],ans:1},
-{q:'Khi xếp hàng, bạn đứng đầu hàng ở vị trí nào so với các bạn còn lại?',opts:['trên','dưới','trước','phải'],ans:2},
-{q:'Em viết bằng tay nào là chủ yếu?',opts:['tay trái','tay phải','cả hai tay'],ans:1},
-{q:'Mặt trời mọc ở hướng đông. Buổi sáng, nhìn về đông thì hướng bắc ở bên nào?',opts:['trái','phải','trước','sau'],ans:0},
-{q:'Mái nhà ở vị trí nào so với nền nhà?',opts:['trên','dưới','phải','trái'],ans:0}];
-let posIdx=0;
-function initPosition(){posIdx=0;newPosQ()}
-function newPosQ(){posIdx=Math.floor(Math.random()*posQuestions.length);const pq=posQuestions[posIdx];document.getElementById('posQ').innerHTML=`<p style="text-align:center;font-size:1.1em;margin:12px 0">${pq.q}</p><div class="option-grid">${pq.opts.map((o,i)=>`<div class="option-btn" onclick="checkPos(${i},this)">${o}</div>`).join('')}</div>`;document.getElementById('fbPos').textContent='';document.getElementById('fbPos').className='feedback'}
-function checkPos(idx,el){const pq=posQuestions[posIdx];const fb=document.getElementById('fbPos');if(idx===pq.ans){fb.textContent='⭑ Đúng! Em rất giỏi!';fb.className='feedback correct';lessonScore++;lessonCorrect++}else{fb.textContent=`Chưa đúng. Đáp án là "${pq.opts[pq.ans]}".`;fb.className='feedback wrong'}lessonQuestions++;document.querySelectorAll('#posQ .option-btn').forEach(b=>b.style.pointerEvents='none');document.querySelectorAll('#posQ .option-btn').forEach((b,i)=>{if(i===pq.ans)b.classList.add('correct')});updateLessonScore7();setTimeout(newPosQ,1800)}
-function updateLessonScore7(){document.getElementById('lscore7').textContent='✅'.repeat(lessonCorrect)+'❌'.repeat(lessonQuestions-lessonCorrect)}
+let lenQData={};
+function initLengthCompare(){
+  document.getElementById('lengthContent').innerHTML=`
+  <div class="lesson-content"><p>Học so sánh độ dài: <span class="highlight">dài hơn</span>, <span class="highlight">ngắn hơn</span>, <span class="highlight">cao hơn</span>, <span class="highlight">thấp hơn</span>.</p>
+  <div class="example"><strong>Ví dụ:</strong><br>📏────────── (dài)<br>📏──── (ngắn)<br>Cái thước trên <span class="highlight">dài hơn</span> cái thước dưới.</div></div>
+  <div class="exercise-box"><h3>🎯 Bài tập: So sánh độ dài</h3><div id="lenQ"></div>
+  <div class="feedback" id="fbLen"></div>
+  <div class="action-row"><button class="btn btn-blue" onclick="newLenQ()">Câu mới 🎲</button></div></div>`;
+  newLenQ();
+}
+function newLenQ(){
+  const questions=[
+    {q:'📏──────────<br>📏────<br>Thước nào dài hơn?',opts:['Thước trên','Thước dưới','Hai thước bằng nhau'],ans:0},
+    {q:'🌳 (cao)<br>🌿 (thấp)<br>Cây nào cao hơn?',opts:['Cây nhỏ','Cây to','Hai cây bằng nhau'],ans:1},
+    {q:'Bút chì dài 15cm, tẩy dài 5cm. Cái nào dài hơn?',opts:['Tẩy','Bút chì','Hai cái bằng nhau'],ans:1},
+    {q:'Con đường A dài 100m, con đường B dài 80m. Con đường nào ngắn hơn?',opts:['Đường A','Đường B','Hai đường bằng nhau'],ans:1},
+    {q:'Sợi dây đỏ dài 20cm, sợi dây xanh dài 20cm. Hai sợi dây thế nào?',opts:['Dây đỏ dài hơn','Dây xanh dài hơn','Hai sợi bằng nhau'],ans:2},
+    {q:'Bàn học cao 75cm, ghế cao 45cm. Cái nào thấp hơn?',opts:['Bàn','Ghế','Hai cái bằng nhau'],ans:1}
+  ];
+  const q=questions[Math.floor(Math.random()*questions.length)];
+  document.getElementById('lenQ').innerHTML=`<p style="text-align:center;font-size:1.15em;margin:12px 0">${q.q}</p><div class="option-grid">${q.opts.map((o,i)=>`<div class="option-btn" onclick="checkLen(${i},${q.ans},this)">${o}</div>`).join('')}</div>`;
+  document.getElementById('fbLen').textContent='';document.getElementById('fbLen').className='feedback';
+}
+function checkLen(idx,ans,el){const fb=document.getElementById('fbLen');if(idx===ans){fb.textContent='⭑ Đúng rồi!';fb.className='feedback correct';el.classList.add('correct');lessonScore++;lessonCorrect++}else{fb.textContent='Chưa đúng. Hãy nhìn kỹ nhé!';fb.className='feedback wrong';el.classList.add('wrong')}lessonQuestions++;document.querySelectorAll('#lenQ .option-btn').forEach(b=>b.style.pointerEvents='none');document.querySelectorAll('#lenQ .option-btn').forEach((b,i)=>{if(i===ans)b.classList.add('correct')});updateLessonStars('lscore6');setTimeout(newLenQ,1500)}
 
+let measureQ={};
+function initMeasure(){
+  document.getElementById('lengthContent').innerHTML=`
+  <div class="lesson-content"><p>Học <span class="highlight">đo độ dài</span> bằng gang tay, sải tay, bước chân!</p>
+  <div class="example"><strong>Đo bằng gang tay:</strong> 1 gang tay = khoảng cách từ ngón cái đến ngón út khi bàn tay mở rộng.<br><strong>Đo bằng bước chân:</strong> 1 bước chân = độ dài một bước đi bình thường.</div></div>
+  <div class="exercise-box"><h3>🎯 Bài tập: Đo độ dài</h3><div id="measureQ"></div>
+  <div class="feedback" id="fbMeasure"></div>
+  <div class="action-row"><button class="btn btn-blue" onclick="newMeasureQ()">Câu mới 🎲</button></div></div>`;
+  newMeasureQ();
+}
+function newMeasureQ(){
+  const questions=[
+    {q:'Bàn học dài khoảng 5 gang tay. Ghế dài khoảng 2 gang tay. Cái nào dài hơn?',opts:['Bàn học','Ghế','Hai cái bằng nhau'],ans:0},
+    {q:'Phòng học dài 10 bước chân. Hành lang dài 15 bước chân. Cái nào dài hơn?',opts:['Phòng học','Hành lang','Hai cái bằng nhau'],ans:1},
+    {q:'Quyển vở dài 3 gang tay. Bút chì dài 1 gang tay. Cái nào ngắn hơn?',opts:['Quyển vở','Bút chì','Hai cái bằng nhau'],ans:1},
+    {q:'Sân trường dài 20 bước chân. Lớp học dài 8 bước chân. Cái nào ngắn hơn?',opts:['Sân trường','Lớp học','Hai cái bằng nhau'],ans:1},
+    {q:'Cái thước dài 2 gang tay. Cây bút dài 1 gang tay. Thước dài hơn bút mấy gang tay?',opts:['1 gang tay','2 gang tay','3 gang tay'],ans:0}
+  ];
+  const q=questions[Math.floor(Math.random()*questions.length)];
+  document.getElementById('measureQ').innerHTML=`<p style="text-align:center;font-size:1.15em;margin:12px 0">${q.q}</p><div class="option-grid">${q.opts.map((o,i)=>`<div class="option-btn" onclick="checkMeasure(${i},${q.ans},this)">${o}</div>`).join('')}</div>`;
+  document.getElementById('fbMeasure').textContent='';document.getElementById('fbMeasure').className='feedback';
+}
+function checkMeasure(idx,ans,el){const fb=document.getElementById('fbMeasure');if(idx===ans){fb.textContent='⭑ Đúng rồi!';fb.className='feedback correct';el.classList.add('correct');lessonScore++;lessonCorrect++}else{fb.textContent='Chưa đúng. Hãy suy nghĩ kỹ nhé!';fb.className='feedback wrong';el.classList.add('wrong')}lessonQuestions++;document.querySelectorAll('#measureQ .option-btn').forEach(b=>b.style.pointerEvents='none');document.querySelectorAll('#measureQ .option-btn').forEach((b,i)=>{if(i===ans)b.classList.add('correct')});updateLessonStars('lscore6');setTimeout(newMeasureQ,1500)}
+
+let cmQ={};
+function initCm(){
+  document.getElementById('lengthContent').innerHTML=`
+  <div class="lesson-content"><p><span class="highlight">Xăng-ti-mét</span> (viết tắt: <strong>cm</strong>) là đơn vị đo độ dài. Dùng thước có vạch chia cm để đo.</p>
+  <div style="margin:16px auto;max-width:400px">
+  <div style="display:flex;align-items:flex-end;height:50px;border:2px solid var(--text);border-radius:8px;background:var(--yellow);position:relative">
+  ${Array.from({length:11},(_,i)=>`<div style="position:absolute;left:${i*10}%;bottom:0;width:2px;height:${i%5===0?'100%':i%1===0?'60%':'40%'};background:var(--text)"></div>${i%5===0?`<span style="position:absolute;left:${i*10}%;bottom:22px;font-size:.65em;font-weight:700;transform:translateX(-50%)">${i}</span>`:''}`).join('')}
+  </div>
+  <p style="text-align:center;font-size:.85em;color:var(--text2);margin-top:4px">Thước đo cm (0 đến 10)</p>
+  </div>
+  <div class="example"><strong>Ví dụ:</strong> Đoạn thẳng từ vạch 0 đến vạch 5 → dài <span class="highlight">5 cm</span></div></div>
+  <div class="exercise-box"><h3>🎯 Bài tập: Đo độ dài bằng cm</h3><div id="cmQ"></div>
+  <div class="feedback" id="fbCm"></div>
+  <div class="action-row"><button class="btn btn-blue" onclick="newCmQ()">Câu mới 🎲</button></div></div>`;
+  newCmQ();
+}
+function newCmQ(){
+  const start=Math.floor(Math.random()*5);const end=start+Math.floor(Math.random()*5)+1;const length=end-start;
+  document.getElementById('cmQ').innerHTML=`<p style="text-align:center;font-size:1.1em;margin:12px 0">Đoạn thẳng từ vạch <strong>${start}</strong> đến vạch <strong>${end}</strong> trên thước dài bao nhiêu cm?</p><div style="margin:16px auto;max-width:400px"><div style="display:flex;align-items:flex-end;height:50px;border:2px solid var(--text);border-radius:8px;background:var(--yellow);position:relative">${Array.from({length:11},(_,i)=>`<div style="position:absolute;left:${i*10}%;bottom:0;width:2px;height:${i%5===0?'100%':i%1===0?'60%':'40%'};background:var(--text)"></div>${i%5===0?`<span style="position:absolute;left:${i*10}%;bottom:22px;font-size:.65em;font-weight:700;transform:translateX(-50%)">${i}</span>`:''}`).join('')}<div style="position:absolute;left:${start*10}%;bottom:0;width:${(end-start)*10}%;height:100%;background:rgba(255,107,107,.3);border-radius:4px"></div></div></div><div class="input-row"><input class="math-input" id="cmInput" type="number" min="0" max="10" placeholder="?" onkeyup="if(event.key==='Enter')checkCm()"><span style="font-size:1.3em;font-weight:700">cm</span><button class="btn btn-green" onclick="checkCm()">Kiểm tra ✓</button></div>`;
+  document.getElementById('fbCm').textContent='';document.getElementById('fbCm').className='feedback';
+  cmQ={length};
+}
+function checkCm(){const val=parseInt(document.getElementById('cmInput').value);const fb=document.getElementById('fbCm');const inp=document.getElementById('cmInput');if(val===cmQ.length){fb.textContent=`⭑ Đúng! Đoạn thẳng dài ${cmQ.length} cm!`;fb.className='feedback correct';inp.className='math-input correct';lessonScore++;lessonCorrect++}else{fb.textContent=`Chưa đúng. Đoạn thẳng dài ${cmQ.length} cm.`;fb.className='feedback wrong';inp.className='math-input wrong'}lessonQuestions++;updateLessonStars('lscore6');setTimeout(newCmQ,1800)}
+
+// ===== THEME 7: ÔN TẬP TỔNG HỢP =====
 function lessonReview(){
-let q='';
-for(let i=0;i<8;i++){const a=Math.floor(Math.random()*5)+1;const b=Math.floor(Math.random()*5)+1;q+=`<div class="exercise-box"><h3>Câu ${i+1}: ${a} + ${b} = ?</h3><div class="option-grid">${shuffleAndPick(a+b).map(o=>`<div class="option-btn" onclick="checkReview(${i},${o},${a+b},this)">${o}</div>`).join('')}</div><div class="feedback" id="rvfb${i}"></div></div>`}
-return `<button class="back-btn" onclick="goHome()">← Về trang chính</button>
-<div class="nav-row"><h2>🏆 Ôn Tập Tổng Hợp</h2><span class="emoji" id="lscore8"></span></div>
-<div class="lesson-content"><p>Làm 8 câu hỏi để ôn lại <span class="highlight">tất cả kiến thức</span> đã học nhé!</p></div>${q}
-<div class="action-row"><button class="btn btn-accent" onclick="finishReview()">Nộp bài ✅</button></div>`;
+  let q='';
+  const types=['add','sub','compare','shape','clock','length'];
+  for(let i=0;i<8;i++){const type=types[i%types.length];q+=`<div class="exercise-box" id="rvbox${i}"><h3>Câu ${i+1}</h3><div id="rvq${i}"></div><div class="feedback" id="rvfb${i}"></div></div>`}
+  return `<button class="back-btn" onclick="goHome()">← Về trang chính</button>
+  <div class="nav-row"><h2>🏆 Ôn Tập Tổng Hợp</h2><span class="emoji" id="lscore7"></span></div>
+  <div class="lesson-content"><p>Làm 8 câu hỏi để ôn lại <span class="highlight">tất cả kiến thức</span> đã học nhé!</p></div>${q}
+  <div class="action-row"><button class="btn btn-accent" onclick="finishReview()">Nộp bài ✅</button></div>`;
 }
-
 let reviewAnswered=new Array(8).fill(false);
-let reviewScores=new Array(8).fill(0);
-function shuffleAndPick(correct){const a=[correct];while(a.length<4){const x=Math.floor(Math.random()*11);if(!a.includes(x))a.push(x)}a.sort(()=>Math.random()-.5);return a}
-function initReview(){reviewAnswered=new Array(8).fill(false);reviewScores=new Array(8).fill(0);lessonScore=0;lessonCorrect=0;lessonQuestions=0}
-function checkReview(idx,val,correct,el){if(reviewAnswered[idx])return;reviewAnswered[idx]=true;const fb=document.getElementById('rvfb'+idx);if(val===correct){fb.textContent='⭑ Đúng!';fb.className='feedback correct';el.classList.add('correct');reviewScores[idx]=1;lessonScore++;lessonCorrect++}else{fb.textContent=`Đáp án là ${correct}.`;fb.className='feedback wrong';el.classList.add('wrong');reviewScores[idx]=0}lessonQuestions++;document.querySelectorAll(`#rvfb${idx}`).parentElement.querySelectorAll('.option-btn').forEach(b=>{b.style.pointerEvents='none';if(parseInt(b.textContent)===correct)b.classList.add('correct')});updateLessonScore8()}
-function updateLessonScore8(){document.getElementById('lscore8').textContent='✅'.repeat(lessonCorrect)+'❌'.repeat(lessonQuestions-lessonCorrect)}
+function initReview(){reviewAnswered=new Array(8).fill(false);lessonScore=0;lessonCorrect=0;lessonQuestions=0;for(let i=0;i<8;i++)newReviewQ(i)}
+function newReviewQ(idx){
+  const type=idx%6;
+  if(type===0){const a=Math.floor(Math.random()*6);const b=Math.floor(Math.random()*(10-a+1));const correct=a+b;const opts=[correct];while(opts.length<4){const x=Math.floor(Math.random()*11);if(!opts.includes(x))opts.push(x)}opts.sort(()=>Math.random()-.5);document.getElementById(`rvq${idx}`).innerHTML=`<p style="text-align:center;font-size:1.2em">${a} + ${b} = ?</p><div class="option-grid">${opts.map(o=>`<div class="option-btn" onclick="checkReview(${idx},${o},${correct},this)">${o}</div>`).join('')}</div>`}
+  else if(type===1){const a=Math.floor(Math.random()*10)+1;const b=Math.floor(Math.random()*(a+1));const correct=a-b;const opts=[correct];while(opts.length<4){const x=Math.floor(Math.random()*(a+1));if(!opts.includes(x))opts.push(x)}opts.sort(()=>Math.random()-.5);document.getElementById(`rvq${idx}`).innerHTML=`<p style="text-align:center;font-size:1.2em">${a} − ${b} = ?</p><div class="option-grid">${opts.map(o=>`<div class="option-btn" onclick="checkReview(${idx},${o},${correct},this)">${o}</div>`).join('')}</div>`}
+  else if(type===2){const a=Math.floor(Math.random()*10);const b=Math.floor(Math.random()*10);const correctSign=a>b?'>':a<b?'<':'=';document.getElementById(`rvq${idx}`).innerHTML=`<p style="text-align:center;font-size:1.2em">${a} ? ${b}</p><div class="option-grid">${['>','<','='].map(s=>`<div class="option-btn" style="font-size:1.5em" onclick="checkReviewStr(${idx},'${s}','${correctSign}',this)">${s}</div>`).join('')}</div>`}
+  else if(type===3){const shapeIdx=Math.floor(Math.random()*4);const shapes=['hình tròn','hình vuông','hình tam giác','hình chữ nhật'];const symbols=['●','■','▲','▬'];document.getElementById(`rvq${idx}`).innerHTML=`<p style="text-align:center;font-size:1.2em">Đây là hình gì? <span style="font-size:1.5em">${symbols[shapeIdx]}</span></p><div class="option-grid">${shapes.map((s,i)=>`<div class="option-btn" style="font-size:.9em" onclick="checkReviewStr(${idx},'${s}','${shapes[shapeIdx]}',this)">${s}</div>`).join('')}</div>`}
+  else if(type===4){const h=Math.floor(Math.random()*12)+1;document.getElementById(`rvq${idx}`).innerHTML=`<p style="text-align:center;font-size:1.2em">Kim ngắn chỉ số ${h}, kim dài chỉ số 12. Là mấy giờ?</p><div class="option-grid">${[h,((h)%12)+1,((h+1)%12)+1,((h+3)%12)+1].sort(()=>Math.random()-.5).map(o=>`<div class="option-btn" onclick="checkReview(${idx},${o},${h},this)">${o} giờ</div>`).join('')}</div>`}
+  else{const a=Math.floor(Math.random()*15)+5;const b=Math.floor(Math.random()*a);const longer=a>b;document.getElementById(`rvq${idx}`).innerHTML=`<p style="text-align:center;font-size:1.2em">Đoạn A dài ${a}cm, đoạn B dài ${b}cm. Đoạn nào dài hơn?</p><div class="option-grid">${['Đoạn A','Đoạn B','Hai đoạn bằng nhau'].map((o,i)=>`<div class="option-btn" onclick="checkReviewStr(${idx},'${o}','${longer?'Đoạn A':'Đoạn B'}',this)">${o}</div>`).join('')}</div>`}
+}
+function checkReview(idx,val,correct,el){if(reviewAnswered[idx])return;reviewAnswered[idx]=true;const fb=document.getElementById('rvfb'+idx);if(val===correct){fb.textContent='⭑ Đúng!';fb.className='feedback correct';el.classList.add('correct');lessonScore++;lessonCorrect++}else{fb.textContent=`Đáp án là ${correct}.`;fb.className='feedback wrong';el.classList.add('wrong')}lessonQuestions++;const parent=el.parentElement;if(parent)parent.querySelectorAll('.option-btn').forEach(b=>{b.style.pointerEvents='none';if(b.textContent.includes(correct.toString()))b.classList.add('correct')});updateLessonStars('lscore7')}
+function checkReviewStr(idx,val,correct,el){if(reviewAnswered[idx])return;reviewAnswered[idx]=true;const fb=document.getElementById('rvfb'+idx);if(val===correct){fb.textContent='⭑ Đúng!';fb.className='feedback correct';el.classList.add('correct');lessonScore++;lessonCorrect++}else{fb.textContent=`Đáp án là "${correct}".`;fb.className='feedback wrong';el.classList.add('wrong')}lessonQuestions++;const parent=el.parentElement;if(parent)parent.querySelectorAll('.option-btn').forEach(b=>{b.style.pointerEvents='none';if(b.textContent===correct)b.classList.add('correct')});updateLessonStars('lscore7')}
 function finishReview(){markComplete();addStar();setTimeout(goHome,500)}
 
 function finishLesson(){markComplete();addStar();setTimeout(goHome,600)}
